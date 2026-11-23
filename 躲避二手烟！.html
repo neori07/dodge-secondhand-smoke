@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html data-page-node-id="Idorj7iKWuuFfUNgXwPTHn" lang="zh-CN">
+<head data-page-node-id="ASaphsWSCrV9w3C89p6Ryx">
+<script data-page-node-id="SiVupwzUQZ7mcAleAHao9E" src="/page/page_comm/inject.js"></script>
+<meta data-page-node-id="o2muKgobXGfWmORrM8k1OR" charset="UTF-8">
+<meta data-page-node-id="XIqtggMJW8QPMAVURlymyI" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<title data-page-node-id="TQnL7B16Nn3GG08rLbr6vp" data-pnid-children="ZPhG4PWxrhJ0n3tKAdIV4i">躲避二手烟！</title>
+<style data-page-node-id="e4WRS8WphWcbbEaHDzJFob" data-pnid-children="KyA4ju8iOuQqFPqeiQuOYw">
+  :root{--ink:#1d2230;--sub:#5b6475;--line:#d8dce4;--paper:#fff;--page:#f3f5f8}
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--page);color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Noto Sans SC",system-ui,sans-serif}
+  #wrap{max-width:1020px;margin:0 auto;padding:22px 18px 40px}
+  .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  h1{font-size:22px;margin:0;letter-spacing:.5px}
+  .tag{font-size:12px;color:var(--sub);border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--paper)}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px;align-items:start}
+  @media(max-width:820px){.layout{grid-template-columns:1fr}}
+  #stage{position:relative;background:#111722;border:3px solid #111722;border-radius:10px;
+    box-shadow:0 10px 30px rgba(20,28,45,.18);overflow:hidden}
+  canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;touch-action:none}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;border-radius:10px}
+  .panel h2{font-size:14px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .row{display:flex;justify-content:space-between;gap:8px;font-size:13px;margin:7px 0;color:var(--sub)}
+  .row b{color:var(--ink);font-weight:600}
+  kbd{display:inline-block;min-width:22px;text-align:center;font:600 11px/18px ui-monospace,Consolas,monospace;
+    background:#eef1f5;border:1px solid #cfd5de;border-bottom-width:2px;border-radius:4px;padding:0 5px;color:#283043}
+  .warn{margin-top:12px;background:#fff5f3;border:1px solid #f2cfc9;color:#9b3527;
+    border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.7}
+  .foot{font-size:12px;color:var(--sub);margin-top:14px;line-height:1.7}
+  #touchControls{display:none;gap:10px;margin-top:12px}
+  #touchControls button{flex:1;padding:14px;border-radius:8px;border:1px solid var(--line);
+    background:#fff;color:var(--ink);font-size:15px;font-weight:600;touch-action:none}
+  @media(pointer:coarse){#touchControls{display:flex}}
+  #soundBtn{float:right;font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--sub);cursor:pointer}
+  .shopBtn{font-size:11px;padding:4px 9px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer}
+  .shopBtn:disabled{opacity:.45;cursor:not-allowed}
+</style>
+</head>
+<body data-page-node-id="DGBMdgraQffg8LwNIRM7Rg">
+<div data-page-node-id="D8LwihtrreTpWaJ48q9KPd" id="wrap">
+  <div data-page-node-id="LN621qbHT3CxXBRbW3CvM6" class="top">
+    <h1 data-page-node-id="Ss7Q6rBtrHm0VoHe0bInko"><!--pnid:qM1JDgqgkaQG6TWWKJQeE7-->躲避二手烟！</h1>
+    <span data-page-node-id="BDYepQK4Ia7356zwv4j4Sh" class="tag"><!--pnid:yRSnKIgRvNUuOqqcKMy9Za-->夕阳横版长路线 · 沿途烟民 · 可选防护装备 · 地标建筑 · 4.8</span>
+  </div>
+  <div data-page-node-id="zlsGvWjQwFE1ElPghoYMLO" class="layout">
+    <div data-page-node-id="fWv6VQxvv8xl8yCyfEM1Wj">
+      <div data-page-node-id="xdAJ2ZulYZiUMBGnJwpoZu" id="stage"><canvas data-page-node-id="mUi0SVbw3462S10OVYvhnA" height="360" id="game" tabindex="0" width="480"></canvas></div>
+      <div data-page-node-id="Af3rBccLEQmam40s0VPDCJ" id="touchControls">
+        <button data-page-node-id="mkvGhPXpHGZVDsLkvOAizT" id="fanBtn"><!--pnid:erHGIjoSbtzBo4apmHH43x-->扇风（46px / CD 1.6s）</button>
+      </div>
+    </div>
+    <div data-page-node-id="dzbztDkSPAHVwk66pxjTGI">
+      <div data-page-node-id="78KoIQnygfk4xXqcN2O43Q" class="panel" style="margin-top:14px">
+        <h2 data-page-node-id="crEkdHUdsTbXmskLSiqcTF"><!--pnid:atnpR5pyHpJjCROcKuQGrJ-->装备补给（开局前 / 游戏中按 1、2 购买）</h2>
+        <div data-page-node-id="hXAOSBQkcSUBDrzEd6fmX2" class="row"><span data-page-node-id="KcNPQz7eGfJXWiIV6Hpvqs"><!--pnid:d0a9Y305Lk6N4LkTdGgjKz-->余额</span><b data-page-node-id="4jq8kzp4Q9TDvcLjK1gfcK" id="moneyLabel"><!--pnid:3KEeo0nmurRgam8cPf637o-->64 G</b></div>
+        <div data-page-node-id="Z7xTZSGi0XrXERUiMgcIOJ" class="row"><span data-page-node-id="abc5w6U4qsOHGIJfOa250t"><!--pnid:kQYV6QptNfvJpQY5aZhnR9-->口罩 · 抵挡烟雾 0.5 秒 · 最多 5 个</span>
+          <button data-page-node-id="0E7muN5t9nUnTzmXB5CTwW" class="shopBtn" id="buyMaskBtn"><!--pnid:JVbmzZE66bcpSrPmgST0iw-->买 1 个 / 4G（<span data-page-node-id="0vZRfwov5fZfUTgVneeUEO" id="maskLabel"><!--pnid:J86g1FjEKnUEcfLAhcKyB2-->0</span><!--pnid:fJHR2BrGKXzs0Bbjw2ZCJA-->/5）</button></div>
+        <div data-page-node-id="4FJdtTNjfT8LwHREiF37wP" class="row"><span data-page-node-id="V83YxlbRJPmpEbrJBf5u6C"><!--pnid:6mIpN7L9Li2xCamMXKSm2e-->防毒面具 · 抵挡烟雾 2 秒 × 5 次 · 最多 1 个</span>
+          <button data-page-node-id="ZFd3ucSGIdaUzFreVbmnxY" class="shopBtn" id="buyGasBtn"><!--pnid:Y2IFJoCLzmvd1rOEQsU7cl-->买 1 个 / 50G（<span data-page-node-id="mJ46P09sgym2avPjibSILE" id="gasLabel"><!--pnid:AVjw9MSYDHAiGJ9w33HuNX-->0</span><!--pnid:MKQhs7EQkWRDvGDdDmTDlL-->/1）</button></div>
+        <div data-page-node-id="lrSKVZQ6kDlpwvlA0q8O8q" class="foot" style="margin-top:8px"><!--pnid:Qx6nr5UvHnI5DP4Agzoggy-->中烟时自动消耗：优先防毒面具（每次扣 1 次次数，5 次用完才消失），其次口罩；抵挡期间不扣血，撞人仍会扣血。</div>
+      </div>
+      <button data-page-node-id="4M1PZppokr0n2GHCuD8jyl" id="soundBtn" style="margin-top:12px"><!--pnid:TopKMcEk02rX2Ua1y9vA9e-->声音：开</button>
+    </div>
+  </div>
+</div>
+
+<script data-page-node-id="zlpw4EbZ2tiTxOfErFKxmK" data-pnid-children="e4ixMtuvyuMJkzAuN5wBZi">
+(() => {
+'use strict';
+const W=480, H=360, WORLD_W=5400, HOME_X=80, MARKET_X=5320;
+const FAN_CD=1.6, FAN_RANGE=46;
+const MASK_COST=4, GAS_COST=50, MAX_MASKS=5, MAX_GAS=1;
+const MASK_TIME=.5, GAS_TIME=2, GAS_USES=5;
+const MAX_RIDERS=10, SMOKE_MIN_SPEED=22, RIDER_SPEED=224; // 骑手速度为玩家步行(112)的 2 倍
+// 烟雾贴图边长 = 半径 × 3.4；可见半径约为边长的 0.4 倍，命中判定再向外扩一圈
+const SMOKE_SCALE=3.4, HIT_RING=5;
+// 角色比例：步行的人取骑手身高的约 80%，汽车保持放大后的尺寸
+const PERSON_SCALE=1.28, CAR_SCALE=1.35, BODY_PAD=10;
+function hitRadius(b){return b.r*SMOKE_SCALE*.4+HIT_RING;}
+// 路线分段：每段有独立的天空、楼体、路面、店招与地标，进入时有门架提示
+// 夕阳下的北京：天空由紫红过渡到橘金，建筑与路面统一压成暖调
+const SEGMENTS=[
+  {end:760, name:'胡同小区', sky:['#2b1f3d','#7a3f52','#d9835a'], bld:['#3b2d3c','#463445'], road:'#4a3a3a', walk:'#6d5854', wall:'#3e3038', signs:['早点','豆浆','修表','花店','胡同'], col:'#ffd07a'},
+  {end:1500,name:'南锣鼓巷', sky:['#3a2340','#8c4553','#e08a5c'], bld:['#4a3340','#553b45'], road:'#554045', walk:'#7d625a', wall:'#48323c', signs:['烤鸭','茶馆','糖葫芦','文创','网吧'], col:'#ff8a5c'},
+  {end:2350,name:'故宫红墙', sky:['#3a2038','#96484a','#e89a63'], bld:['#5a3633','#65403a'], road:'#5a4140', walk:'#8a6a5a', wall:'#573735', signs:['故宫','照相','书店','面馆','纪念'], col:'#ffcf70'},
+  {end:3250,name:'国贸CBD', sky:['#1e2447','#5b4a7a','#d07a72'], bld:['#3a3a58','#424765'], road:'#434354', walk:'#6b6478', wall:'#33354e', signs:['银行','写字楼','咖啡','便利','券商'], col:'#ffb37a'},
+  {end:4100,name:'奥林匹克公园', sky:['#223552','#7a657e','#e39a76'], bld:['#3b4a50','#45565a'], road:'#46524f', walk:'#6f7b70', wall:'#35443f', signs:['鸟巢','水立方','奥体','咖啡','鲜花'], col:'#ffc46a'},
+  {end:4800,name:'城市绿道', sky:['#263f4c','#7d8a72','#e8b077'], bld:['#3d4a40','#475449'], road:'#475b4b', walk:'#738574', wall:'#37483d', signs:['公园','单车','花店','书店','茶馆'], col:'#ffe08a'},
+  {end:5400,name:'超市街区', sky:['#2b2340','#83505c','#dd9468'], bld:['#463b49','#4e4351'], road:'#4d4450', walk:'#77707a', wall:'#403842', signs:['超市','药房','早点','便利','水果'], col:'#ffd06a'}
+];
+function segmentAt(x){for(const s of SEGMENTS)if(x<s.end)return s;return SEGMENTS[SEGMENTS.length-1];}
+const canvas=document.getElementById('game');
+const ctx=canvas.getContext('2d');
+ctx.imageSmoothingEnabled=false;
+
+const rnd=(a,b)=>a+Math.random()*(b-a);
+const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+function rect(c,x,y,w,h,col){c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.round(w),Math.round(h));}
+function blockCircle(c,cx,cy,r,col){
+  c.fillStyle=col;
+  for(let y=Math.round(cy-r);y<=Math.round(cy+r);y+=2){
+    const dy=y-cy,half=Math.sqrt(Math.max(0,r*r-dy*dy));
+    c.fillRect(Math.round(cx-half),y,Math.round(half*2),2);
+  }
+}
+function drawText(c,s,x,y,size,col,align='left',bold=true){
+  c.font=(bold?'bold ':'')+size+'px "Microsoft YaHei","PingFang SC",sans-serif';
+  c.textAlign=align;c.textBaseline='middle';c.fillStyle=col;c.fillText(s,x,y);
+}
+function txt(s,x,y,size,col,align='left',bold=true){drawText(ctx,s,x,y,size,col,align,bold);}
+
+// 路口定义
+const INTERSECTIONS=[
+  {x:620, green:4.2, red:4.5, offset:0,   name:'南锣鼓巷口'},
+  {x:1050,green:4.2, red:4.5, offset:.8,  name:'灯市口'},
+  {x:1500,green:4.2, red:4.5, offset:1.6, name:'王府井口'},
+  {x:1980,green:4.2, red:4.5, offset:3.8, name:'大望路口'},
+  {x:2470,green:4.2, red:4.5, offset:5.9, name:'国贸路口'},
+  {x:2900,green:4.2, red:4.5, offset:7.9, name:'国贸北路口'},
+  {x:3450,green:4.2, red:4.5, offset:6.46,name:'奥体西路口'},
+  {x:4000,green:4.2, red:4.5, offset:4.83,name:'森林公园口'},
+  {x:4550,green:4.2, red:4.5, offset:6.38,name:'绿道口'},
+  {x:5050,green:4.2, red:4.5, offset:6.46,name:'超市前路口'}
+];
+// 路上的汽车：既是背景也是实体障碍，必须绕行（不扣血）
+const CARS=[
+  {x:300,y:272,col:'#d8a72e'},{x:820,y:206,col:'#4b6b87'},
+  {x:1250,y:272,col:'#d8a72e'},{x:1700,y:206,col:'#4b6b87'},
+  {x:2200,y:272,col:'#d8a72e'},{x:2650,y:206,col:'#4b6b87'},
+  {x:3150,y:272,col:'#d8a72e'},{x:3700,y:206,col:'#4b6b87'},
+  {x:4250,y:272,col:'#d8a72e'},{x:4780,y:206,col:'#4b6b87'},
+  {x:5200,y:272,col:'#d8a72e'}
+];
+// 红绿灯完全按全局时间独立循环，与玩家是否接近无关
+function lightOf(ix){
+  const c=ix.green+ix.red, t=(elapsed+ix.offset)%c;
+  return t<ix.green?{green:true,remain:ix.green-t}:{green:false,remain:c-t};
+}
+
+// ---------- 背景 ----------
+const far=document.createElement('canvas');far.width=WORLD_W;far.height=180;
+const fc=far.getContext('2d');
+const near=document.createElement('canvas');near.width=WORLD_W;near.height=H;
+const nc=near.getContext('2d');
+function drawTaxi(c,x,y,col){
+  // 以车底为锚点放大，避免放大后车沉到路面以下
+  c.save();c.translate(x,y+15);c.scale(CAR_SCALE,CAR_SCALE);c.translate(-x,-(y+15));
+  rect(c,x,y,64,16,'#1c2026');rect(c,x+4,y-6,54,18,col);
+  rect(c,x+12,y-12,34,8,col==='#d8a72e'?'#c79a28':'#3f5d74');
+  rect(c,x+16,y-10,12,6,'#263746');rect(c,x+30,y-10,12,6,'#263746');
+  rect(c,x+6,y+11,8,4,'#e8e3c8');rect(c,x+50,y+11,8,4,'#d35a3c');
+  c.restore();
+}
+function drawShop(c,x,w,h,sign,col,i,wall){
+  rect(c,x,120-h,w,h,wall);
+  rect(c,x,120-h,w,3,i%2?'#4b5663':'#5a6572');
+  for(let wy=120-h+12;wy<108;wy+=13)
+    for(let wx=x+7;wx<x+w-8;wx+=11)
+      rect(c,wx,wy,5,7,(wx+wy+i)%4===0?'#d6bd7c':'#222b36');
+  rect(c,x+3,108,w-6,14,'#202a35');rect(c,x+8,107,w-16,10,'#111820');
+  c.save();c.shadowColor=col;c.shadowBlur=6;drawText(c,sign,x+w/2,112,9,col,'center');c.restore();
+}
+// ---- 北京地标：按参考图改为紫粉蓝水彩线稿风格 ----
+// 景墙：蜂窝六边形纹理（参考图最左）
+function drawPatternWall(c,x,w,base){
+  rect(c,x,base-32,w,32,'#d97bb5');
+  rect(c,x,base-32,w,3,'#f0b8d8');
+  c.strokeStyle='#a85494';c.lineWidth=1;
+  for(let row=0;row<4;row++)for(let col=0;col<Math.floor(w/16);col++){
+    const hx=x+8+col*16+(row%2)*8,hy=base-26+row*8;
+    c.beginPath();
+    for(let k=0;k<6;k++){
+      const a=Math.PI/3*k,a2=Math.PI/3*(k+1);
+      if(k===0)c.moveTo(hx+Math.cos(a)*5,hy+Math.sin(a)*5);
+      c.lineTo(hx+Math.cos(a2)*5,hy+Math.sin(a2)*5);
+    }
+    c.stroke();
+  }
+}
+// 中央电视塔：细长锥形塔身 + 球形观景台 + 天线
+function drawCCTVTower(c,cx,base){
+  const H=130,sy=base-H+34;
+  rect(c,cx-9,base-4,18,5,'#a85494');
+  rect(c,cx-6,base-9,12,6,'#c46aa8');
+  for(let y=base-9;y>sy;y-=2){
+    const t=(base-9-y)/(H-43),w=Math.max(3,9-t*5);
+    rect(c,cx-w/2,y,w,2,t>.55?'#c46aa8':'#e090c0');
+  }
+  for(let i=0;i<8;i++){
+    const yy=sy-14+i*4,w=14-Math.abs(i-3.5)*1.6;
+    rect(c,cx-w/2,yy,w,3,i%2?'#f0b8d8':'#d97bb5');
+    rect(c,cx-w/2,yy,w,1,'#f8d4e8');
+  }
+  rect(c,cx-2,sy-24,4,12,'#e090c0');
+  rect(c,cx-1,sy-52,2,30,'#c46aa8');
+  rect(c,cx,sy-62,1,12,'#f0b8d8');
+  rect(c,cx-2,sy-64,5,3,'#f8d4e8');
+}
+// 天坛祈年殿：三层攒尖圆顶 + 柱子 + 台基
+function drawTempleOfHeaven(c,cx,base){
+  rect(c,cx-24,base-4,48,5,'#a85494');
+  rect(c,cx-20,base-10,40,6,'#d97bb5');
+  for(let x=cx-16;x<=cx+16;x+=8)rect(c,x,base-34,3,24,'#c46aa8');
+  const tiers=[
+    {y:base-34,bw:48,tw:28,h:12,col:'#d97bb5',dark:'#a85494'},
+    {y:base-50,bw:38,tw:20,h:11,col:'#e090c0',dark:'#c46aa8'},
+    {y:base-65,bw:28,tw:10,h:10,col:'#f0b8d8',dark:'#d97bb5'}
+  ];
+  for(const t of tiers){
+    c.fillStyle=t.col;c.beginPath();
+    c.moveTo(cx-t.tw/2,t.y);c.lineTo(cx+t.tw/2,t.y);
+    c.lineTo(cx+t.bw/2,t.y-t.h);c.lineTo(cx-t.bw/2,t.y-t.h);
+    c.closePath();c.fill();
+    rect(c,cx-t.bw/2-3,t.y-t.h,t.bw+6,3,t.dark);
+    rect(c,cx-t.bw/2-1,t.y-2,t.bw+2,2,t.dark);
+  }
+  rect(c,cx-2,base-80,4,6,'#f0b8d8');
+  rect(c,cx-1,base-84,2,6,'#f8d4e8');
+}
+// 故宫门楼：蓝色两层庑殿顶 + 城台拱门
+function drawPalaceGate(c,cx,base){
+  rect(c,cx-32,base-30,64,30,'#4a5bb0');
+  rect(c,cx-32,base-30,64,3,'#7a8fd8');
+  for(let i=-1;i<=1;i++){
+    const gx=cx+i*19;
+    c.fillStyle='#262a5a';c.beginPath();
+    c.arc(gx,base-11,7,Math.PI,0);c.lineTo(gx+7,base);c.lineTo(gx-7,base);c.closePath();c.fill();
+    rect(c,gx-8,base-2,16,2,'#3d4a9e');
+  }
+  c.fillStyle='#5b6fc0';c.beginPath();
+  c.moveTo(cx-22,base-32);c.lineTo(cx+22,base-32);
+  c.lineTo(cx+34,base-42);c.lineTo(cx-34,base-42);c.closePath();c.fill();
+  rect(c,cx-36,base-45,72,4,'#3d4a9e');
+  rect(c,cx-20,base-58,40,14,'#5b6fc0');
+  for(let i=0;i<3;i++)rect(c,cx-15+i*12,base-55,6,8,'#3d4a9e');
+  c.fillStyle='#7a8fd8';c.beginPath();
+  c.moveTo(cx-14,base-60);c.lineTo(cx+14,base-60);
+  c.lineTo(cx+26,base-70);c.lineTo(cx-26,base-70);c.closePath();c.fill();
+  rect(c,cx-28,base-73,56,4,'#3d4a9e');
+  rect(c,cx-2,base-80,4,8,'#7a8fd8');
+  rect(c,cx-4,base-82,8,3,'#9ab0f0');
+}
+// 鸟巢：紫粉网格编织碗状外壳
+function drawNest(c,cx,base){
+  const rx=48,ry=25,my=base-26;
+  for(let y=my-ry;y<=my+ry;y+=2){
+    const t=(y-my)/ry,hw=rx*Math.sqrt(Math.max(0,1-t*t));
+    for(let x=cx-hw;x<cx+hw;x+=3){
+      const nx=(x-cx)/rx,inner=nx*nx+t*t<.5;
+      if(inner&&y<my+ry-5)continue;
+      const weave=((Math.round((x-cx)/3)+Math.round((y-my)/2))%3===0);
+      rect(c,x,y,3,2,weave?'#c98fd4':'#8e6fc0');
+    }
+  }
+  for(let k=-2;k<=2;k++)for(let t=-.9;t<=.9;t+=.12){
+    const x=cx+k*12+t*20,y=my+t*ry*.9;
+    if(Math.abs((x-cx)/rx)<.95)rect(c,x,y,3,2,'#b995e0');
+  }
+  rect(c,cx-42,my-ry,84,2,'#d9a8e4');
+  rect(c,cx-34,base-2,5,8,'#7d5cae');rect(c,cx+29,base-2,5,8,'#7d5cae');
+}
+function drawOfficeTower(c,x,h,w,col){
+  rect(c,x,150-h,w,h,col);
+  for(let y=150-h+6;y<148;y+=8)
+    for(let xx=x+4;xx<x+w-3;xx+=6)rect(c,xx,y,3,4,'#9ab0f0');
+  rect(c,x+w/2-1,150-h-8,2,8,'#7a8fd8');
+}
+// 央视大楼（大裤衩）：蓝色门形框 + 网格幕墙
+function drawCCTV(c,x,base){
+  const top=base-72;
+  // 两条外撇斜腿，中间留大洞，整体向右上倾斜（参考图的大裤衩轮廓）
+  c.fillStyle='#4a5bb0';c.beginPath();
+  c.moveTo(x,base);c.lineTo(x+16,top+10);c.lineTo(x+26,top+10);c.lineTo(x+10,base);c.closePath();c.fill();
+  c.beginPath();
+  c.moveTo(x+52,base);c.lineTo(x+42,top+10);c.lineTo(x+52,top+10);c.lineTo(x+62,base);c.closePath();c.fill();
+  c.fillStyle='#5b6fc0';c.beginPath();
+  c.moveTo(x+14,top+12);c.lineTo(x+54,top+2);c.lineTo(x+56,top-10);c.lineTo(x+16,top);c.closePath();c.fill();
+  c.strokeStyle='#7a8fd8';c.lineWidth=1;
+  for(let i=0;i<4;i++){
+    c.beginPath();c.moveTo(x+18+i*7,top+8-i);c.lineTo(x+9+i*4,base);c.stroke();
+    c.beginPath();c.moveTo(x+48-i*7,top+6-i);c.lineTo(x+57-i*4,base);c.stroke();
+  }
+  for(let i=0;i<6;i++){
+    c.beginPath();c.moveTo(x+17+i*7,top+11-i);c.lineTo(x+17+i*7,top-2-i);c.stroke();
+  }
+  rect(c,x+16,top+2,40,3,'#9ab0f0');
+}
+// 中国尊：收腰再收顶的超高层轮廓（蓝紫）
+function drawChinaZun(c,cx,base){
+  c.fillStyle='#4a5bb0';c.beginPath();
+  c.moveTo(cx-19,base);c.lineTo(cx-15,base-50);c.lineTo(cx-11,base-72);
+  c.lineTo(cx+11,base-72);c.lineTo(cx+15,base-50);c.lineTo(cx+19,base);c.closePath();c.fill();
+  for(let i=-3;i<=3;i++)rect(c,cx+i*5-1,base-68,2,64,'#7a8fd8');
+  for(let y=base-8;y>base-70;y-=9)rect(c,cx-16,y,32,2,'#3d4a9e');
+  rect(c,cx-12,base-76,24,4,'#7a8fd8');rect(c,cx-1,base-86,3,10,'#9ab0f0');
+}
+// 十字路口：在背景里画一条向远处收窄的横向支路，并让上下人行道在此断开，
+// 与主路形成清晰的十字交叉（而非只有一段斑马线）。
+function drawCrossStreets(){
+  INTERSECTIONS.forEach(ix=>{
+    const seg=segmentAt(ix.x);
+    const nearL=ix.x-10,nearR=ix.x+46,farL=ix.x+9,farR=ix.x+27;
+    // 向远处延伸的支路（近宽远窄的透视梯形）
+    nc.fillStyle=seg.road;nc.beginPath();
+    nc.moveTo(nearL,140);nc.lineTo(nearR,140);
+    nc.lineTo(farR,46);nc.lineTo(farL,46);nc.closePath();nc.fill();
+    // 支路中心的分道虚线，越远越短
+    for(let y=52;y<138;y+=16){
+      const t=(y-46)/94,lw=1+t*1.6,segH=2+t*4;
+      rect(nc,ix.x+18-lw/2,y,lw,segH,'rgba(226,196,140,.38)');
+    }
+    // 支路两侧的矮楼轮廓，强化街道纵深
+    rect(nc,farL-26,96,22,44,seg.bld[0]);rect(nc,farR+4,96,22,44,seg.bld[1]);
+    // 上下人行道在路口断开，露出十字路口
+    rect(nc,nearL,120,nearR-nearL,22,seg.road);
+    rect(nc,nearL,330,nearR-nearL,30,seg.road);
+  });
+}
+// 地标必须画在近景层（与街道同一视差，否则会被近景墙完全遮住且位置错位）。
+// 先画地标，再画店铺/红墙/车辆，让地标自然处于这些近景建筑的后方。
+function drawLandmarks(){
+  // 参考图：粉紫蓝水彩地标天际线，按路线顺序铺开，避开近景红墙的 x 区间
+  drawPatternWall(nc,120,150,140);        // 胡同口蜂窝景墙
+  drawPalaceGate(nc,724,140);             // 鼓楼/故宫门楼
+  drawCCTVTower(nc,1550,138);             // 中央电视塔
+  drawTempleOfHeaven(nc,2000,138);        // 天坛祈年殿
+  drawPalaceGate(nc,2160,138);            // 故宫午门
+  // 国贸CBD：写字楼群 + 央视大楼 + 中国尊
+  drawOfficeTower(nc,2480,86,30,'#3d4a9e');
+  drawOfficeTower(nc,2530,70,26,'#4a5bb0');
+  drawCCTV(nc,2602,138);
+  drawOfficeTower(nc,2680,78,28,'#4356ad');
+  drawChinaZun(nc,2992,138);
+  drawOfficeTower(nc,3070,82,30,'#3d4a9e');
+  drawOfficeTower(nc,3120,64,26,'#4a5bb0');
+  // 奥林匹克公园：紫粉网格鸟巢 + 水立方
+  drawNest(nc,3600,138);
+  for(let r=0;r<3;r++)for(let cc=0;cc<5;cc++){
+    const bx=3840+cc*24+(r%2)*10,by=112-r*16;
+    rect(nc,bx,by,22,14,r%2?'#5b6fc0':'#7a8fd8');
+    rect(nc,bx+2,by+2,18,2,'rgba(200,215,255,.4)');
+  }
+}
+function buildWorld(){
+  // 分段天空：每段换一套色板
+  SEGMENTS.forEach((seg,si)=>{
+    const x0=si?SEGMENTS[si-1].end:0,sw=Math.min(seg.end,WORLD_W)-x0;
+    const g=fc.createLinearGradient(0,0,0,180);
+    g.addColorStop(0,seg.sky[0]);g.addColorStop(.55,seg.sky[1]);g.addColorStop(1,seg.sky[2]);
+    fc.fillStyle=g;fc.fillRect(x0,0,sw,180);
+  });
+  blockCircle(fc,2380,40,17,'#b8a782');blockCircle(fc,2380,40,12,'#d8c9a4');
+  let k=0;
+  for(let x=-20;x<WORLD_W;x+=48){
+    const seg=segmentAt(x),w=40+((k*19)%30),h=44+((k*37)%52);
+    rect(fc,x,150-h,w,h,k%2?seg.bld[0]:seg.bld[1]);
+    for(let wy=150-h+8;wy<146;wy+=10)
+      for(let wx=x+5;wx<x+w-4;wx+=9)
+        if((wx*7+wy*3+k)%5<2)rect(fc,wx,wy,3,4,seg.name==='超市街区'?'#ffdf9a':'#f0b478');
+    k++;
+  }
+
+  // 分段街道
+  SEGMENTS.forEach((seg,si)=>{
+    const x0=si?SEGMENTS[si-1].end:0,sw=Math.min(seg.end,WORLD_W)-x0;
+    rect(nc,x0,0,sw,120,seg.wall);
+    rect(nc,x0,120,sw,20,seg.walk);
+    for(let x=x0;x<x0+sw;x+=12)rect(nc,x,120,1,20,'rgba(0,0,0,.16)');
+    rect(nc,x0,140,sw,2,'#b09a86');
+    rect(nc,x0,142,sw,188,seg.road);
+    rect(nc,x0,330,sw,20,seg.walk);
+    for(let x=x0;x<x0+sw;x+=12)rect(nc,x,330,1,20,'rgba(0,0,0,.16)');
+    rect(nc,x0,330,sw,2,'#b09a86');
+  });
+  for(let x=-20;x<WORLD_W;x+=44){rect(nc,x,232,22,2,'#c6b98d');rect(nc,x,300,22,2,'#8e8770');}
+
+  // 店铺：招牌跟着路段变化；路口处留出空档，供横向支路穿过形成十字路口
+  let x=130,i=0;
+  while(x<WORLD_W-120){
+    const seg=segmentAt(x),w=66+((i*17)%26),h=80+((i*29)%38);
+    const atCross=INTERSECTIONS.some(ix=>x+w>ix.x-12&&x<ix.x+48);
+    if(!atCross)drawShop(nc,x,w,h,seg.signs[i%seg.signs.length],seg.col,i,seg.wall);
+    x+=w+4;i++;
+  }
+  // 十字路口的横向支路与人行道断口（在店铺留空后画，远处路段不会被店铺盖住）
+  drawCrossStreets();
+  // 天安门 / 故宫红墙
+  rect(nc,420,72,160,48,'#8d3b32');rect(nc,420,72,160,5,'#a94a3c');
+  rect(nc,414,66,172,7,'#3f4a4a');rect(nc,422,60,156,6,'#4c5856');
+  rect(nc,482,86,36,34,'#1e242c');rect(nc,490,76,20,18,'#e0c58e');
+  for(let a=1750;a<1950;a+=40){
+    rect(nc,a,72,40,48,'#8f3b32');rect(nc,a,72,40,4,'#c9a24c');
+    rect(nc,a+12,86,6,10,'#3a2c28');rect(nc,a+26,86,6,10,'#3a2c28');
+  }
+  // 北京地标天际线：画在店铺/红墙之后、路灯之前，处于近景建筑后方但不会被墙遮住
+  drawLandmarks();
+  // 路灯 / 树（绿道段更密）
+  for(let px=180;px<WORLD_W-60;px+=138){
+    const seg=segmentAt(px);
+    rect(nc,px,52,3,68,'#242b33');rect(nc,px-6,50,15,3,'#242b33');
+    rect(nc,px-2,52,7,3,seg.col);
+    blockCircle(nc,px+48,108,13,seg.name==='城市绿道'?'#3f6b47':'#35483f');rect(nc,px+51,118,3,18,'#3b3630');
+    if(seg.name==='城市绿道'){
+      blockCircle(nc,px+76,108,11,'#487852');blockCircle(nc,px+94,106,9,'#3f6b47');
+    }
+  }
+  CARS.forEach(car=>drawTaxi(nc,car.x,car.y,car.col));
+
+  // 路口斑马线与灯杆
+  INTERSECTIONS.forEach(ix=>{
+    for(let y=146;y<328;y+=14)rect(nc,ix.x,y,34,7,'#bab6a4');
+    rect(nc,ix.x-48,60,3,80,'#25303a');
+    rect(nc,ix.x-54,56,16,16,'#161d24');
+    rect(nc,ix.x-46,146,3,72,'#25303a');
+    rect(nc,ix.x-52,212,16,16,'#161d24');
+    rect(nc,ix.x-46,138,3,10,'#d8d2bd');
+  });
+  // 路段门架：进入新街区时的明显提示
+  SEGMENTS.slice(1).forEach((seg,si)=>{
+    const gx=seg.end-40;
+    rect(nc,gx,84,4,36,'#1b222b');rect(nc,gx+104,84,4,36,'#1b222b');
+    rect(nc,gx-6,80,116,16,'rgba(10,15,22,.9)');
+    drawText(nc,'▶ '+seg.name,gx+52,88,10,seg.col,'center');
+    nc.save();nc.globalAlpha=.13;drawText(nc,seg.name,gx+180,236,40,seg.col,'center');nc.restore();
+  });
+  // 家 / 超市
+  rect(nc,30,60,96,80,'#3e4652');rect(nc,30,60,96,4,'#525c68');
+  rect(nc,62,112,30,28,'#1d2630');drawText(nc,'家',78,92,14,'#e8c06b','center');
+  drawText(nc,'算了回家吧',78,153,9,'#ffd07a','center');
+  rect(nc,MARKET_X-70,58,150,82,'#4a5563');rect(nc,MARKET_X-70,58,150,4,'#65717e');
+  rect(nc,MARKET_X-60,108,130,30,'#1d2833');
+  drawText(nc,'超 市',MARKET_X+5,82,19,'#8ce0b4','center');
+  rect(nc,MARKET_X-70,140,150,4,'#9aa6aa');
+}
+buildWorld();
+
+// 烟雾贴图
+const smokes=[];
+function makeSmoke(v){
+  const s=document.createElement('canvas');s.width=40;s.height=40;const c=s.getContext('2d');
+  const puffs=v===0?[[20,20,14],[13,17,9],[27,16,9],[18,27,10],[26,25,7]]
+      :v===1?[[20,20,13],[14,23,9],[25,14,10],[12,16,7],[28,25,8]]
+             :[[19,21,14],[26,19,10],[14,14,8],[15,27,9],[27,28,7]];
+  puffs.forEach((p,i)=>{
+    blockCircle(c,p[0],p[1],p[2],i%2?'#9fa7ab':'#cdd3d4');
+    blockCircle(c,p[0]-1,p[1]-1,Math.max(3,p[2]-4),'#e3e7e6');
+  });
+  blockCircle(c,19,22,5,'#798388');return s;
+}
+for(let i=0;i<3;i++)smokes.push(makeSmoke(i));
+
+// 声音
+let audio=null,muted=false;
+function sfx(freq,dur,type='square',vol=.045){
+  if(muted)return;
+  try{
+    if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();
+    if(audio.state==='suspended')audio.resume();
+    const o=audio.createOscillator(),g=audio.createGain();
+    o.type=type;o.frequency.setValueAtTime(freq,audio.currentTime);
+    g.gain.setValueAtTime(vol,audio.currentTime);
+    g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+dur);
+    o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur);
+  }catch(e){}
+}
+
+// ---------- 状态 ----------
+const S={TITLE:0,PLAY:1,PAUSE:2,OVER:3,WIN:4,SHOP:5};
+let state=S.TITLE;
+let player,bullets,particles,enemies,cyclists,passersby,elapsed,wind,camX,shake,fanFx,windLabel,bumpFx,bumpSfx,hurtFx,hurtLabel;
+let cycleTimer,blockedBy,overShake;
+let graze=0,score=0,best=0;
+let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
+const MAX_LIVES=10;
+const keys={left:false,right:false,up:false,down:false};
+let touchTarget=null,touchDown=false;
+
+// 三条射击线：y=232 为路中央，y=132 / y=338 分别为上下两侧人行道
+const ENEMY_DEFS=[
+  // 胡同 / 南锣
+  {x:350,y:232,t:0},{x:470,y:132,t:0},{x:560,y:338,t:1},
+  {x:700,y:232,t:1},{x:880,y:132,t:0},{x:1010,y:338,t:0},
+  {x:1130,y:232,t:0},{x:1270,y:132,t:1},{x:1400,y:338,t:0},
+  // 故宫 / 王府井
+  {x:1560,y:232,t:1},{x:1700,y:132,t:0},{x:1830,y:338,t:0},
+  {x:1960,y:232,t:0},{x:2100,y:132,t:1},{x:2240,y:338,t:0},
+  // 国贸 CBD
+  {x:2380,y:232,t:0},{x:2510,y:132,t:0},{x:2640,y:338,t:1},
+  {x:2770,y:232,t:1},{x:2900,y:132,t:0},{x:3030,y:338,t:0},
+  {x:3160,y:232,t:0},
+  // 奥体 / 绿道
+  {x:3300,y:132,t:0},{x:3430,y:338,t:1},{x:3560,y:232,t:0},
+  {x:3690,y:132,t:0},{x:3820,y:338,t:0},{x:3890,y:232,t:1},
+  {x:4080,y:132,t:0},{x:4210,y:338,t:0},{x:4340,y:232,t:0},
+  {x:4470,y:132,t:1},{x:4600,y:338,t:0},{x:4730,y:232,t:0},
+  // 超市街区
+  {x:4860,y:132,t:0},{x:4990,y:338,t:1},{x:5130,y:232,t:0}
+];
+function makeEnemies(){
+  return ENEMY_DEFS.map((d,i)=>({
+    x:d.x,base:d.x,y:d.y,lane:d.y<150?'top':d.y>320?'bottom':'road',
+    walk:d.t===1,dir:i%2===0?1:-1,
+    speed:rnd(14,24),fire:rnd(.5,2.2),puff:0,i
+  }));
+}
+// 不抽烟的普通人：和抽烟者外形相近，但不喷烟、不扣血，只是挡路的背景板
+// [上衣, 袖子/点缀, 头发, 下装, 鞋子]
+const PASSER_COLORS=[
+  ['#e2603c','#963a26','#7b3f2e','#6d5a48','#8a3d2f'],
+  ['#e8a82e','#9a6a18','#a9502c','#6f6f78','#2d3138'],
+  ['#36a879','#206b4f','#5b3a2c','#7c5c3e','#7d3d2e'],
+  ['#3f8fd8','#265b8d','#3d3030','#5d6572','#2d3138'],
+  ['#9b5fc6','#633a84','#4a3040','#6b5a7a','#3c3048'],
+  ['#e05a86','#963457','#8a3b3b','#7a6b60','#3c3048'],
+  ['#d9c23f','#91811e','#5a4632','#6c6650','#4a4034']
+];
+const PASSERBY_DEFS=[
+  {x:300,y:132,t:1,c:2},{x:420,y:232,t:0,c:0},{x:180,y:338,t:0,c:5},
+  {x:640,y:132,t:1,c:3},{x:820,y:232,t:0,c:1},{x:940,y:338,t:1,c:4},
+  {x:1100,y:338,t:0,c:5},{x:1180,y:232,t:1,c:2},{x:1340,y:132,t:0,c:6},
+  {x:1520,y:338,t:1,c:0},{x:1680,y:232,t:1,c:3},{x:1900,y:132,t:0,c:1},
+  {x:2080,y:232,t:0,c:4},{x:2260,y:338,t:1,c:5},{x:2320,y:132,t:1,c:2},
+  {x:2560,y:232,t:0,c:6},{x:2720,y:338,t:1,c:0},{x:3080,y:232,t:1,c:3},
+  {x:3240,y:132,t:0,c:1},{x:3400,y:338,t:1,c:4},{x:3620,y:132,t:0,c:5},
+  {x:3760,y:232,t:1,c:2},{x:3920,y:338,t:0,c:6},{x:4080,y:132,t:1,c:0},
+  {x:4280,y:338,t:0,c:3},{x:4400,y:232,t:1,c:1},{x:4640,y:132,t:0,c:4},
+  {x:4740,y:338,t:1,c:5},{x:4900,y:232,t:1,c:2},{x:5060,y:132,t:0,c:6},
+  {x:5180,y:338,t:1,c:0},{x:5300,y:132,t:1,c:3}
+];
+function makePassersby(){
+  return PASSERBY_DEFS.map((d,i)=>({
+    x:d.x,base:d.x,y:d.y,lane:d.y<150?'top':d.y>320?'bottom':'road',
+    walk:d.t===1,dir:i%2===0?1:-1,speed:rnd(8,16),col:d.c||0,i
+  }));
+}
+// 红灯等待骑手开局就预置在地图远处，玩家远远能看到，不再到路口才凭空出现
+// 每个路口 2~3 名，每项：[y, 是否抽烟, 配色序号]
+const WAITING_RIDERS=[
+  [[212,1,2],[288,0,4]],
+  [[196,0,1],[256,1,5],[312,0,3]],
+  [[204,1,0],[284,0,6]],
+  [[188,0,3],[248,1,1],[308,0,5]],
+  [[216,1,4],[296,0,2]],
+  [[192,0,6],[252,1,3],[312,0,0]],
+  [[208,1,5],[288,0,1]],
+  [[196,0,2],[256,1,4],[308,0,6]],
+  [[212,1,3],[292,0,0]],
+  [[200,0,5],[260,1,2],[312,0,4]]
+];
+function reset(){
+  player={x:HOME_X,y:250,r:4,speed:112,lives:MAX_LIVES,inv:0,fanCd:0,vx:0,vy:0};
+  bullets=[];particles=[];enemies=makeEnemies();passersby=makePassersby();cyclists=[];
+  elapsed=0;wind=0;windLabel='微风';camX=0;shake=0;fanFx=0;bumpFx=0;bumpSfx=0;hurtFx=0;hurtLabel='';
+  cycleTimer=3.5;blockedBy=null;overShake=0;graze=0;score=0;
+  money=64;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
+  INTERSECTIONS.forEach((ix,k)=>{
+    ix.waitSpawned=true;ix.wasGreen=lightOf(ix).green;ix.topUpIn=0;
+    WAITING_RIDERS[k].slice(0,2).forEach(([y,s,c],slot)=>cyclists.push({
+      // 停止线在 ix.x-46，斑马线在 ix.x~ix.x+34；骑手排在停止线后方，绝不在斑马线附近
+      x:ix.x-52-slot*26-rnd(0,4),y,dir:1,smoking:!!s,
+      speed:RIDER_SPEED,fire:s?rnd(1.2,2.0):0,phase:rnd(0,6),
+      waitingFor:ix,assignIX:ix,col:c,green:(k%4===2),trail:rnd(.05,.18),pre:true
+    }));
+  });
+}
+reset();
+function updateShopUI(){
+  const ml=document.getElementById('moneyLabel'),mk=document.getElementById('maskLabel'),gs=document.getElementById('gasLabel');
+  if(!ml||!mk||!gs)return;
+  ml.textContent=money+' G';mk.textContent=masks;gs.textContent=gasMasks?gasMasks+'（剩 '+gasUses+' 次）':'0';
+  const canBuy=state===S.TITLE||state===S.PLAY;
+  const bm=document.getElementById('buyMaskBtn'),bg=document.getElementById('buyGasBtn');
+  if(bm)bm.disabled=!canBuy||money<MASK_COST||masks>=MAX_MASKS;
+  if(bg)bg.disabled=!canBuy||money<GAS_COST||gasMasks>=MAX_GAS;
+}
+function buyMask(){
+  if((state!==S.TITLE&&state!==S.PLAY)||money<MASK_COST||masks>=MAX_MASKS)return false;
+  money-=MASK_COST;masks++;sfx(520,.1,'triangle',.04);updateShopUI();return true;
+}
+function buyGasMask(){
+  if((state!==S.TITLE&&state!==S.PLAY)||money<GAS_COST||gasMasks>=MAX_GAS)return false;
+  money-=GAS_COST;gasMasks++;gasUses=GAS_USES;sfx(660,.18,'triangle',.05);updateShopUI();return true;
+}
+// 中烟自动抵挡：优先防毒面具（每个可用 5 次）；返回 true 表示这次烟雾不扣血
+function useSmokeProtection(){
+  if(protect>0)return true;
+  if(gasMasks>0&&gasUses>0){
+    gasUses--;
+    if(gasUses<=0)gasMasks=0;
+    protect=GAS_TIME;shieldLabel='防毒面具';
+  }
+  else if(masks>0){masks--;protect=MASK_TIME;shieldLabel='口罩';}
+  else return false;
+  shieldFx=.9;sfx(760,.12,'sine',.045);updateShopUI();return true;
+}
+function areaName(){return segmentAt(player.x).name;}
+
+// ---------- 弹幕 ----------
+function addBullet(x,y,vx,vy,maxR,life,grow,homing){
+  // 烟雾必须持续向前：保证最低飞行速度，并记住初始水平方向，避免被风吹停/吹回头
+  const sp0=Math.hypot(vx,vy)||1;
+  if(sp0<SMOKE_MIN_SPEED){const k=SMOKE_MIN_SPEED/sp0;vx*=k;vy*=k;}
+  bullets.push({x,y,vx,vy,dir0x:Math.sign(vx)||1,r:Math.min(maxR,maxR*.35),maxR,life,age:0,grow,
+    variant:Math.floor(Math.random()*3),grazed:false,wf:rnd(.08,.3),
+    homing:homing===undefined?rnd(.16,.38):homing});
+}
+// 所有烟雾都以玩家为目标：按玩家速度做提前量的瞄准角
+function aimAngle(sx,sy,speed,offset){
+  const dist=Math.hypot(sx-player.x,sy-player.y)||1;
+  const flight=clamp(dist/speed,0,2.4);
+  // 停止线回推会产生瞬时的负 vx，若不夹紧会让射手瞄到玩家身后，看起来像烟雾往回飞
+  let tx=player.x+clamp(player.vx,-70,70)*flight*.6;
+  // 提前量不得越过射手，否则近距离时会朝反方向开火
+  const cap=player.x+(sx-player.x)*.55;
+  tx=sx>player.x?Math.min(tx,cap):Math.max(tx,cap);
+  // 目标点锁在玩家可走的路面内，避免上下人行道烟民朝屏幕外开火
+  const ty=clamp(player.y+player.vy*flight*.4,150,320);
+  return Math.atan2(ty-sy,tx-sx)+(offset||0);
+}
+function puff(x,y,n,col){
+  for(let i=0;i<n;i++)particles.push({x,y,vx:rnd(-26,26),vy:rnd(-30,10),
+    life:rnd(.3,.8),age:0,r:rnd(1,3),col:col||'#cbd1d2'});
+}
+function aimedAt(sx,sy,n,spread,speed,maxR,life,owner){
+  const a=aimAngle(sx,sy,speed,0);
+  for(let i=0;i<n;i++){
+    const ang=a+(i-(n-1)/2)*spread+rnd(-.02,.02);
+    addBullet(sx,sy,Math.cos(ang)*speed,Math.sin(ang)*speed,maxR,life,rnd(3,6));
+  }
+  if(owner)owner.puff=.35;
+}
+// 原本的环形烟改成「朝向玩家的宽扇形齐射」
+function ringAt(sx,sy,n,speed,maxR,life,owner){
+  const a=aimAngle(sx,sy,speed,0);
+  for(let i=0;i<n;i++){
+    const off=n>1?(i-(n-1)/2)/(n-1)*1.9:0;
+    const ang=a+off+rnd(-.03,.03),sp=speed*rnd(.85,1.12);
+    addBullet(sx,sy,Math.cos(ang)*sp,Math.sin(ang)*sp,maxR,life,rnd(2,5));
+  }
+  if(owner)owner.puff=.35;
+}
+// 螺旋烟改成「以玩家为中心的错速连射」
+function spiralAt(sx,sy,phase,speed,maxR,life,owner){
+  const a=aimAngle(sx,sy,speed,0);
+  for(let i=0;i<4;i++){
+    const ang=a+(i-1.5)*.2+Math.sin(phase+i)*.08,sp=speed*(1+i*.08);
+    addBullet(sx,sy,Math.cos(ang)*sp,Math.sin(ang)*sp,maxR,life,4);
+  }
+  if(owner)owner.puff=.3;
+}
+// 滞留烟团同样直扑玩家，只是速度慢、体积大
+function cloudAt(sx,sy,owner){
+  const x=sx+rnd(-16,16),y=clamp(sy+rnd(-24,24),158,316);
+  const a=aimAngle(x,y,34,0),sp=rnd(28,42);
+  addBullet(x,y,Math.cos(a)*sp,Math.sin(a)*sp,rnd(20,26),rnd(6,9),rnd(2,3.2),.6);
+  puff(x,y,5);if(owner)owner.puff=.4;
+}
+// 横扫烟不再是固定横向飘，五发全部朝玩家扇开
+function sweepFrom(e){
+  const sx=e.x;
+  const sy=clamp(player.y+rnd(-40,40),158,316);
+  const a=aimAngle(sx,sy,82,0);
+  for(let k=-1;k<=1;k++){
+    const ang=a+k*.2,sp=rnd(68,84);
+    addBullet(sx,sy,Math.cos(ang)*sp,Math.sin(ang)*sp,11,7,2.5);
+  }
+  e.puff=.4;
+}
+function routeFire(e){
+  const r=Math.random();
+  if(r<.45)aimedAt(e.x,e.y,2,.17,rnd(46,58),10.5,7,e);
+  else if(r<.68)ringAt(e.x,e.y,6,rnd(22,28),10.5,8,e);
+  else if(r<.86)spiralAt(e.x,e.y,rnd(0,6),34,10.5,8,e);
+  else cloudAt(e.x,e.y,e);
+  sfx(115,.06,'sawtooth',.014);
+}
+function cyclistFire(c){
+  aimedAt(c.x,c.y,1,.12,rnd(78,96),8,5,null);
+  if(Math.random()<.3){
+    const a=aimAngle(c.x,c.y,60,rnd(-.3,.3)),sp=rnd(52,70);
+    addBullet(c.x,c.y,Math.cos(a)*sp,Math.sin(a)*sp,rnd(14,19),6,2);
+  }
+  sfx(160,.05,'square',.012);
+}
+// 抽烟骑手高速经过时身后拖出一串烟雾：不追踪、缓慢扩散，碰到照样中烟扣血
+function cyclistTrail(c){
+  const bx=c.x-c.dir*rnd(12,20),by=c.y+rnd(-4,4);
+  addBullet(bx,by,-c.dir*rnd(3,9),rnd(-7,7),rnd(9,13),rnd(1.8,2.6),rnd(3,4.5),0);
+}
+// 等红灯时不开火也不拖尾，只是嘴里的烟缓缓向身后飘散（仍会伤到后方的玩家）
+function cyclistIdleSmoke(c){
+  for(let i=0;i<2;i++){
+    addBullet(c.x-c.dir*rnd(2,8),c.y+rnd(-9,-3),
+      -c.dir*rnd(10,18),rnd(-6,2),rnd(9,13),rnd(1.8,2.6),rnd(1.5,2.5),0);
+  }
+}
+function spawnCyclist(){
+  const fromLeft=Math.random()<.5,smoking=Math.random()<.6;
+  cyclists.push({
+    x:fromLeft?camX-50:camX+W+50,
+    y:rnd(250,318),dir:fromLeft?1:-1,smoking,
+    speed:RIDER_SPEED,fire:smoking?rnd(.15,.3):0,phase:rnd(0,6),
+    col:Math.floor(Math.random()*PASSER_COLORS.length),
+    green:Math.random()<.14,trail:rnd(.05,.18)
+  });
+}
+// 骑手和玩家看同一盏灯。等灯位置只在斑马线后方的停止线一侧，
+// 已经驶过停止线、正在路口内的则原地等下一次绿灯，绝不会在路口另一侧排队。
+function cyclistRedHold(c){
+  for(const ix of INTERSECTIONS){
+    const s=(c.x-ix.x)*c.dir; // 沿行进方向相对路口中心的位移，负数表示尚未到路口
+    // 停止线在 s≈-46，斑马线在 s≈0~34；只在停止线后方排队，
+    // 已进入路口的（s>0）原地等到绿灯，但不会有人停在路口另一侧（s>38）
+    if(s>-112&&s<38&&!lightOf(ix).green)return ix;
+  }
+  return null;
+}
+// 路中央的行人也要在斑马线后等灯；人行道上平行于马路走的不用等
+function pedRedHold(p){
+  if(p.lane!=='road')return null;
+  for(const ix of INTERSECTIONS){
+    const s=(p.x-ix.x)*p.dir;
+    if(s>=-112&&s<=8&&!lightOf(ix).green)return ix;
+  }
+  return null;
+}
+// 玩家接近红灯时补齐等灯骑手：在屏幕外生成后骑入排队，绝不会在路口/斑马线附近凭空出现
+function spawnWaitingAt(ix,k){
+  const pat=WAITING_RIDERS[k][Math.floor(Math.random()*WAITING_RIDERS[k].length)];
+  cyclists.push({
+    x:camX-70-rnd(0,40),y:pat[0],dir:1,smoking:!!pat[1],
+    speed:RIDER_SPEED,fire:pat[1]?rnd(1.2,2.0):0,phase:rnd(0,6),
+    waitingFor:ix,assignIX:ix,col:pat[2],green:(k%4===2),trail:rnd(.05,.18)
+  });
+}
+function useFan(){
+  if(state!==S.PLAY||player.fanCd>0)return;
+  player.fanCd=FAN_CD;fanFx=.36;player.inv=Math.max(player.inv,.28);
+  let n=0;
+  for(const b of bullets){
+    const dx=b.x-player.x,dy=b.y-player.y,d=Math.hypot(dx,dy)||1;
+    if(d<FAN_RANGE+b.r*.6){
+      const power=150*(1-d/(FAN_RANGE+b.r*.6))+65;
+      b.vx+=dx/d*power;b.vy+=dy/d*power;b.homing=0;
+      b.r=Math.max(3,b.r*.72);b.maxR=Math.min(b.maxR,b.r+2);
+      b.life=Math.min(b.life,b.age+2.6);n++;
+    }
+  }
+  puff(player.x,player.y,10,'#e6f2f0');sfx(320,.16,'triangle',.055);
+  if(n>0)sfx(180,.12,'sine',.03);
+}
+function hit(label){
+  player.lives--;player.inv=4.0;shake=7;
+  bumpFx=0;hurtFx=1.1;hurtLabel=label||'咳咳咳';
+  bullets=bullets.filter(b=>Math.hypot(b.x-player.x,b.y-player.y)>120);
+  puff(player.x,player.y,20,'#e6a89a');sfx(90,.4,'sawtooth',.08);
+  if(player.lives<=0){
+    state=S.OVER;overShake=2.0;shake=2.2;
+    best=Math.max(best,Math.floor(score));sfx(65,.7,'sawtooth',.08);updateShopUI();
+  }
+}
+function win(){
+  state=S.WIN;best=Math.max(best,Math.floor(score));updateShopUI();
+  sfx(520,.5,'triangle',.07);setTimeout(()=>sfx(660,.5,'triangle',.06),160);
+}
+// 彩蛋：开局拐进家门，直接放弃步行改网购
+function shopEnd(){
+  state=S.SHOP;best=Math.max(best,Math.floor(score));updateShopUI();
+  puff(player.x,player.y,14,'#ffd07a');
+  sfx(330,.18,'triangle',.05);setTimeout(()=>sfx(660,.35,'sine',.05),180);
+}
+
+// 路人/烟民/骑手是实体：不能穿过，撞到会扣血；汽车是纯障碍，只能绕行
+function resolveBodies(verticalOnly){
+  const bodies=[];
+  // 路中央抽烟者：正面相遇必须上下绕开 38px；人行道上的是侧向火力，不套用绕行规则
+  for(const e of enemies)if(Math.abs(e.x-player.x)<110)
+    bodies.push({x:e.x,y:e.y-(e.lane==='road'?8:6),r:e.lane==='road'?16:13,clear:e.lane==='road'?38:0,block:true,hurt:true,kind:'smoker'});
+  // 抽烟骑手会撞伤玩家；普通骑手只是挡路。骑手保持外卖车原尺寸判定
+  for(const c of cyclists)if(Math.abs(c.x-player.x)<100)
+    bodies.push({x:c.x,y:c.y-8,r:20,hurt:c.smoking!==false,kind:'cyclist'});
+  // 普通人挡路但不喷烟、不扣血，只给出「让行」提示
+  for(const p of passersby)if(Math.abs(p.x-player.x)<110&&p.lane==='road')
+    bodies.push({x:p.x,y:p.y-6,r:13,hurt:false,kind:'passerby'});
+  let bumped=false,touchedLabel=null;
+  const minX=HOME_X-30,maxX=(verticalOnly&&blockedBy&&player.x<=blockedBy.ix.x-46+2)?blockedBy.ix.x-46:WORLD_W-12;
+  for(let pass=0;pass<8;pass++){
+    for(const b of bodies){
+      const dx=player.x-b.x,dy=player.y-b.y;
+      const dist=Math.hypot(dx,dy),min=BODY_PAD+b.r;
+      if(dist>=min)continue;
+      if(b.hurt&&player.inv<=0)touchedLabel=b.kind==='cyclist'?'危险！':'咳咳咳';
+      // 受击无敌期间骑手不再阻挡：迎面快速骑手若持续物理推挤，会把玩家一路往左推甚至卡死
+      if(b.kind==='cyclist'&&player.inv>0)continue;
+      // 三种分离候选：径向、纯水平、纯垂直。取「能真正分开且移动最小」的一个，
+      // 这样即使贴着屏幕边界或红灯停止线，也不会卡在实体里。
+      const cand=(nx,ny)=>{
+        nx=clamp(nx,minX,maxX);ny=clamp(ny,player.x>58&&player.x<100?118:150,320);
+        return{x:nx,y:ny,d:Math.hypot(nx-b.x,ny-b.y),move:Math.hypot(nx-player.x,ny-player.y)};
+      };
+      const dd=dist||1;
+      let list;
+      if(b.kind==='cyclist'){
+        // 骑手：只做垂直分离，把玩家推到车身上/下方绕行，绝不再水平推着玩家倒退
+        const vn=Math.sqrt(Math.max(0,min*min-Math.min(min,Math.abs(dx))**2));
+        const up=cand(player.x,b.y-vn),down=cand(player.x,b.y+vn);
+        list=up.d>=min-.05?[up,down]:[down,up];
+      }else{
+        list=[cand(player.x+dx/dd*(min-dist),player.y+dy/dd*(min-dist))];
+        const hn=Math.sqrt(Math.max(0,min*min-Math.min(min,Math.abs(dy))**2));
+        list.push(cand(b.x+hn,player.y),cand(b.x-hn,player.y));
+        const vn=Math.sqrt(Math.max(0,min*min-Math.min(min,Math.abs(dx))**2));
+        list.push(cand(player.x,b.y+vn),cand(player.x,b.y-vn));
+      }
+      const need=b.clear||0,cannotPass=need&&player.x<b.x;
+      if(need)list.push(cand(player.x,b.y+need+2),cand(player.x,b.y-need-2));
+      // 正面没拉开垂直距离时，不接受「穿到抽烟者身后」的候选位置
+      const rank=p=>{
+        const sep=p.d>=min-.05;
+        const legal=!(cannotPass&&p.x>=b.x-1&&Math.abs(p.y-b.y)<need);
+        return (sep&&legal)?0:(sep||legal)?1:2;
+      };
+      let best=list[0],bestKey=Infinity;
+      for(const p of list){
+        const key=rank(p)*1e6+p.move*100+(min-p.d)*10;
+        if(key<bestKey){bestKey=key;best=p;}
+      }
+      player.x=best.x;player.y=best.y;
+      bumped=true;
+    }
+    // 汽车：矩形实体，判定框随车身一起放大，优先把玩家推到车身上下方绕行
+    for(const car of CARS){
+      if(Math.abs(car.x-player.x)>110)continue;
+      const L=car.x+4*CAR_SCALE,R=car.x+60*CAR_SCALE,T=car.y+15-27*CAR_SCALE,B=car.y+15,PR=8;
+      if(player.x+PR<=L||player.x-PR>=R||player.y+PR<=T||player.y-PR>=B)continue;
+      const up=player.y-T,down=B-player.y;
+      if(up<=down&&player.y-(up+PR)>=150)player.y-=(up+PR);
+      else if(down<up&&player.y+(down+PR)<=320)player.y+=(down+PR);
+      else{
+        const pl=(player.x+PR)-L,pr=R-(player.x-PR);
+        player.x+=pl<pr?-pl:pr;
+      }
+      player.y=clamp(player.y,150,320);
+      player.x=clamp(player.x,HOME_X-30,WORLD_W-12);
+      bumped=true;
+    }
+  }
+  if(touchedLabel){
+    hit(touchedLabel);
+  }else if(bumped){
+    bumpFx=.2;
+    if(bumpSfx<=0){sfx(150,.06,'square',.018);bumpSfx=.4;}
+  }
+}
+function applyRedLight(prevX,preserve){
+  if(!preserve)blockedBy=null;
+  for(const ix of INTERSECTIONS){
+    const st=lightOf(ix),stopX=ix.x-46,farX=ix.x+48;
+    if(st.green)continue;
+    const wasLeft=prevX<=stopX+1;
+    const atStop=blockedBy&&blockedBy.ix===ix&&player.x<=stopX+2;
+    if((wasLeft||atStop)&&player.x>stopX-1&&player.x<farX){
+      // 红灯亮起时尚未越过停止线：停在白线后
+      player.x=stopX;
+    }else if(player.x>stopX&&player.x<farX){
+      // 绿灯中途转红：已进入路口也不能继续通过，原地等到下次绿灯
+      player.x=clamp(Math.min(player.x,prevX),stopX,farX-1);
+    }else continue;
+    if(!blockedBy||blockedBy.ix!==ix)blockedBy={ix,st};
+    else blockedBy.st=st;
+  }
+}
+
+// ---------- 更新 ----------
+function update(dt){
+  // 结算画面只抖 2 秒后就完全静止，避免失败文字一直晃得看不清
+  if(state===S.OVER&&overShake>0){
+    overShake=Math.max(0,overShake-dt);
+    shake=overShake>0?2.2:0;
+  }else if(state!==S.PLAY){
+    shake=Math.max(0,shake-dt*20);
+  }
+  if(state!==S.PLAY)return;
+  elapsed+=dt;
+  wind=Math.sin(elapsed*.31)*9+Math.sin(elapsed*.13+1)*5;
+  windLabel=wind>4?'东风 →':wind<-4?'← 西风':'微风';
+  player.fanCd=Math.max(0,player.fanCd-dt);
+  player.inv=Math.max(0,player.inv-dt);fanFx=Math.max(0,fanFx-dt);
+  protect=Math.max(0,protect-dt);shieldFx=Math.max(0,shieldFx-dt);
+  bumpFx=Math.max(0,bumpFx-dt);bumpSfx=Math.max(0,bumpSfx-dt);hurtFx=Math.max(0,hurtFx-dt);
+
+  let dx=0,dy=0;
+  if(keys.left)dx--;if(keys.right)dx++;if(keys.up)dy--;if(keys.down)dy++;
+  if(touchDown&&touchTarget){
+    const ddx=touchTarget.x-player.x,ddy=touchTarget.y-player.y,d=Math.hypot(ddx,ddy);
+    if(d>3){dx=ddx/d;dy=ddy/d;}
+  }
+  const sp=player.speed;
+  const d=Math.hypot(dx,dy)||1,prevX=player.x;
+  player.x=clamp(player.x+dx/d*sp*dt,HOME_X-30,WORLD_W-12);
+  // 家门口允许向上走进门里，触发网购彩蛋
+  const atHomeDoor=player.x>58&&player.x<100;
+  player.y=clamp(player.y+dy/d*sp*dt,atHomeDoor?118:150,320);
+  player.vy=(keys.up?-sp:keys.down?sp:0);
+
+  // 实体碰撞：路人与骑手不可穿过；红灯：必须停在停止线后
+  resolveBodies();
+  applyRedLight(prevX);
+  // 被停止线拦住时不产生“倒退速度”，否则烟民会朝玩家身后预判开火
+  player.vx=blockedBy?0:(player.x-prevX)/dt;
+  // 红灯等待区不再给保护或推开烟雾：烟必须继续追踪、继续有威胁
+  camX=clamp(player.x-W*.38,0,WORLD_W-W);
+  score+=Math.max(0,player.x-prevX)*1.5+dt*4;
+
+  // 路边定点 / 走动烟民
+  for(const e of enemies){
+    e.puff=Math.max(0,e.puff-dt);
+    if(e.walk){
+      e.x+=e.dir*e.speed*dt;
+      if(e.x>e.base+52){e.x=e.base+52;e.dir=-1;}
+      if(e.x<e.base-52){e.x=e.base-52;e.dir=1;}
+    }
+    if(Math.abs(e.x-player.x)>320)continue;
+    e.fire-=dt;
+    if(e.fire<=0){e.fire=6.0*rnd(.85,1.15);routeFire(e);}
+  }
+  // 只给玩家前方最近的那个红灯路口补等灯骑手，避免所有路口一起补员造成暴涨
+  const nextK=INTERSECTIONS.findIndex(ix=>ix.x>player.x-60);
+  if(nextK>=0){
+    const ix=INTERSECTIONS[nextK];
+    if(!lightOf(ix).green&&ix.x<player.x+560){
+      const holders=cyclists.filter(c=>c.assignIX===ix).length;
+      const want=Math.min(2,WAITING_RIDERS[nextK].length);
+      for(let n=holders;n<want&&cyclists.length<MAX_RIDERS;n++)spawnWaitingAt(ix,nextK);
+    }
+  }
+  // 抽烟骑手：绿灯自由通过，中途转红立即停在路口继续等待
+  cycleTimer-=dt;
+  if(cycleTimer<=0){cycleTimer=rnd(7,10);if(cyclists.length<MAX_RIDERS)spawnCyclist();}
+  for(let i=cyclists.length-1;i>=0;i--){
+    const c=cyclists[i];
+    const hold=cyclistRedHold(c);
+    if(hold){
+      // 玩家早已走远的路口，等待骑手直接回收，避免越积越多
+      if(c.x<camX-140||c.x>camX+W+160){cyclists.splice(i,1);continue;}
+      c.waitingFor=hold;
+      c.phase+=dt*3;
+      // 等红灯：不拖尾、不瞄准开火，只把烟向身后慢慢吐出
+      if(c.smoking){c.fire-=dt;if(c.fire<=0){c.fire=rnd(2.4,3.4);cyclistIdleSmoke(c);}}
+      continue;
+    }
+    c.waitingFor=null;
+    c.x+=c.dir*c.speed*dt;c.phase+=dt*8;
+    if(c.assignIX&&(c.x-c.assignIX.x)*c.dir>60)c.assignIX=null; // 已驶过该路口，不再算等灯骑手
+    if(c.x<camX-80||c.x>camX+W+80){cyclists.splice(i,1);continue;}
+    if(c.smoking){
+      c.fire-=dt;if(c.fire<=0){c.fire=rnd(1.0,1.4);cyclistFire(c);}
+      // 高速经过时身后拖出一串烟雾
+      c.trail-=dt;if(c.trail<=0){c.trail=rnd(.12,.2);cyclistTrail(c);}
+    }
+  }
+  // 不抽烟路人来回踱步，纯背景但仍是实体；走到路口红灯时停在斑马线后方
+  for(const p of passersby){
+    if(!p.walk||pedRedHold(p))continue;
+    p.x+=p.dir*p.speed*dt;
+    if(p.x>p.base+38){p.x=p.base+38;p.dir=-1;}
+    if(p.x<p.base-38){p.x=p.base-38;p.dir=1;}
+  }
+  // 路人/骑手移动后再次消解重叠，避免穿模
+  resolveBodies();
+  applyRedLight(prevX,true);
+  if(blockedBy){
+    resolveBodies(true);
+    // 最后一次分离可能把玩家挤到停止线左侧，立刻夹回来保持站位
+    if(player.x<blockedBy.ix.x-46)player.x=blockedBy.ix.x-46;
+  }
+  player.vx=blockedBy?0:(player.x-prevX)/dt;
+
+  // 弹幕
+  for(let i=bullets.length-1;i>=0;i--){
+    const b=bullets[i];b.age+=dt;
+    // 烟团在还没飞过玩家前缓慢修向；一旦越过就锁死方向继续飞，绝不调头或停下
+    if(b.homing>0&&b.age<2.4){
+      const bd=Math.hypot(player.x-b.x,player.y-b.y);
+      const ahead=(player.x-b.x)*b.dir0x>0; // 玩家仍在烟雾的飞行方向前方
+      if(bd>40&&ahead){
+        const want=Math.atan2(player.y-b.y,player.x-b.x);
+        const cur=Math.atan2(b.vy,b.vx);
+        const diff=((want-cur+Math.PI*3)%(Math.PI*2))-Math.PI;
+        const turn=clamp(diff,-b.homing*dt,b.homing*dt),sp=Math.max(SMOKE_MIN_SPEED,Math.hypot(b.vx,b.vy));
+        b.vx=Math.cos(cur+turn)*sp;b.vy=Math.sin(cur+turn)*sp;
+      }
+    }
+    // 风只做轻微扰动，不允许把烟雾的水平速度吹成反向或吹停
+    const sp=Math.max(SMOKE_MIN_SPEED,Math.hypot(b.vx,b.vy));
+    if(Math.hypot(b.vx,b.vy)<sp){const k=sp/(Math.hypot(b.vx,b.vy)||1);b.vx*=k;b.vy*=k;}
+    let wx=b.vx+wind*b.wf;
+    if(Math.sign(wx)!==b.dir0x&&Math.abs(wx)<Math.abs(b.vx))wx=b.vx;
+    b.x+=wx*dt;b.y+=b.vy*dt;
+    b.r=Math.min(b.maxR,b.r+b.grow*dt);
+    if(b.age>b.life||b.x<camX-60||b.x>camX+W+60||b.y<120||b.y>350){bullets.splice(i,1);continue;}
+    const dist=Math.hypot(b.x-player.x,b.y-player.y),hr=hitRadius(b);
+    if(player.inv>0&&dist<62&&dist>.1){
+      b.vx+=(b.x-player.x)/dist*150*dt;b.vy+=(b.y-player.y)/dist*150*dt;
+    }
+    if(!b.grazed&&dist<hr+15&&dist>player.r+hr){b.grazed=true;graze++;score+=50;if(graze%10===0)sfx(660,.05,'sine',.03);}
+    if(player.inv<=0&&dist<hr+player.r){if(!useSmokeProtection())hit();break;}
+  }
+  for(let i=particles.length-1;i>=0;i--){
+    const q=particles[i];q.age+=dt;q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=.97;q.vy*=.97;
+    if(q.age>q.life)particles.splice(i,1);
+  }
+  shake=Math.max(0,shake-dt*20);
+  if(player.x>58&&player.x<100&&player.y<136){shopEnd();return;}
+  if(player.x>=MARKET_X)win();
+}
+
+// ---------- 绘制 ----------
+function drawPerson(x,y,inv,side,smoking,col,variant){
+  // 以脚底为锚点放大，身高约为骑手人物的 80%，站位不会下沉
+  ctx.save();
+  ctx.translate(x,y+11);ctx.scale(PERSON_SCALE,PERSON_SCALE);ctx.translate(-x,-(y+11));
+  const blink=inv>0&&Math.floor(inv*12)%2===0;
+  if(blink)ctx.globalAlpha=.45;
+  ctx.globalAlpha*=.6;blockCircle(ctx,x,y+10,7,'#22272d');ctx.globalAlpha=blink?.45:1;
+  if(side==='player'){
+    rect(ctx,x-4,y+4,3,6,'#2d3a4d');rect(ctx,x+1,y+4,3,6,'#2d3a4d');
+    rect(ctx,x-6,y-6,12,11,'#2f6f9e');rect(ctx,x-6,y-6,2,11,'#245a83');
+    rect(ctx,x-5,y-15,10,9,'#d7a880');rect(ctx,x-5,y-16,10,3,'#30333b');
+    rect(ctx,x-4,y-12,8,4,'#d8eff2');rect(ctx,x+4,y-8,3,8,'#22587c');
+  }else{
+    // 路人参考扁平插画造型：男款短发+长袖+短裤+看手机，女款短发+上衣+阔腿裤+斜挎包
+    const dir=side==='left'?1:-1,smk=smoking!==false;
+    const pal=smk?['#6b6a63','#4c4b46','#33302d','#5a4636','#2c2f34']:PASSER_COLORS[(col||0)%PASSER_COLORS.length];
+    const male=(variant===undefined?(col||0):variant)%2===0,skin='#d9a37c';
+    if(male){
+      rect(ctx,x-5,y+4,3,5,skin);rect(ctx,x+2,y+4,3,5,skin);
+      rect(ctx,x-6,y+8,5,3,'#553f33');rect(ctx,x+1,y+8,5,3,'#553f33');
+      rect(ctx,x-6,y+9,6,2,pal[4]);rect(ctx,x+1,y+9,6,2,pal[4]);
+      rect(ctx,x-5,y-1,10,6,pal[3]);
+      rect(ctx,x-6,y-9,12,9,pal[0]);rect(ctx,x-7*dir,y-8,3,8,pal[1]);
+      rect(ctx,x+(dir>0?5:-8),y-5,3,5,'#27333b');
+      rect(ctx,x+(dir>0?5:-8),y-4,2,3,'#8fd6dc');
+      rect(ctx,x+(dir>0?3:-7),y-3,3,2,skin);
+      blockCircle(ctx,x,y-14,5,skin);
+      rect(ctx,x-5,y-18,10,4,pal[2]);rect(ctx,x-5*dir,y-16,3,5,pal[2]);
+    }else{
+      rect(ctx,x-6,y-1,5,10,pal[3]);rect(ctx,x+1,y-1,5,10,pal[3]);
+      rect(ctx,x-6,y+9,6,2,pal[4]);rect(ctx,x+1,y+9,6,2,pal[4]);
+      rect(ctx,x-5,y-9,11,9,pal[0]);rect(ctx,x-7*dir,y-8,3,8,pal[1]);
+      rect(ctx,x+(dir>0?5:-8),y-6,3,5,skin);
+      rect(ctx,x-3*dir,y-9,2,9,'#c94335');
+      rect(ctx,x+(dir>0?3:-9),y-2,6,4,'#d94a3a');
+      blockCircle(ctx,x,y-15,5.5,pal[2]);rect(ctx,x-5,y-15,10,7,pal[2]);
+      rect(ctx,x-3,y-14,7,6,skin);rect(ctx,x+dir*3,y-12,1,1,'#5a3a30');
+    }
+    if(smk){
+      rect(ctx,dir>0?x+6:x-12,y-11,6,2,'#d8d3c6');
+      rect(ctx,dir>0?x+12:x-13,y-12,2,3,Math.random()<.6?'#ff8a3d':'#f2c05a');
+      ctx.globalAlpha=.55;blockCircle(ctx,dir>0?x+15:x-16,y-14,3,'#d5d9d8');ctx.globalAlpha=blink?.45:1;
+    }
+  }
+  ctx.restore();
+}
+function drawCyclist(c){
+  // 外卖骑手：多数黄车黄衣，偶尔穿插绿色（约 1/7）；深蓝裤子，按行进方向镜像
+  const x=c.x-camX,y=c.y+Math.sin(c.phase)*1.5,smk=c.smoking!==false,gr=!!c.green;
+  const P=gr
+    ? {hub:'#7fe09a',box:'#2f9b52',boxTop:'#4fd07a',boxHi:'#9df0b5',boxLo:'#27834a',
+       body:'#3fbf6a',deck:'#74e096',bodyLo:'#2a9b56',bodyLo2:'#35a85c',
+       front:'#4fc97a',frontHi:'#8ce8a6',lamp:'#eaffe8',
+       coat:'#3fbf6a',coatHi:'#74e096',coatLo:'#2a9b56',
+       helm:'#4fc97a',helmHi:'#8ce8a6',helmLo:'#2a9b56'}
+    : {hub:'#f2bb31',box:'#c77d16',boxTop:'#ffb627',boxHi:'#ffda5c',boxLo:'#d88a18',
+       body:'#ffb627',deck:'#ffd23f',bodyLo:'#d98d16',bodyLo2:'#e09b1e',
+       front:'#ffc831',frontHi:'#ffda55',lamp:'#fff0a8',
+       coat:'#ffc22c',coatHi:'#ffd94a',coatLo:'#f5a623',
+       helm:'#ffca2e',helmHi:'#ffd94a',helmLo:'#ffb627'};
+  ctx.save();
+  ctx.translate(Math.round(x),Math.round(y));
+  if(c.dir<0)ctx.scale(-1,1);
+  ctx.globalAlpha=.5;blockCircle(ctx,0,12,17,'#1d2028');ctx.globalAlpha=1;
+
+  // 车轮
+  blockCircle(ctx,-14,8,7,'#1b2540');blockCircle(ctx,-14,8,3,P.hub);
+  blockCircle(ctx,14,8,7,'#1b2540');blockCircle(ctx,14,8,3,P.hub);
+  // 后座外卖箱
+  rect(ctx,-24,-9,15,14,P.box);rect(ctx,-23,-10,13,13,P.boxTop);
+  rect(ctx,-22,-7,11,3,P.boxHi);rect(ctx,-22,-2,11,2,P.boxLo);
+  // 车身与踏板
+  rect(ctx,-16,0,22,7,P.body);rect(ctx,-13,6,26,4,P.deck);
+  rect(ctx,-9,9,16,2,P.bodyLo);rect(ctx,-20,-1,8,4,P.bodyLo2);
+  // 前护板、车把和车灯
+  rect(ctx,8,-10,9,17,P.front);rect(ctx,10,-7,5,12,P.frontHi);
+  rect(ctx,7,-12,10,3,'#333b4a');rect(ctx,15,-14,7,3,'#1c2534');
+  rect(ctx,17,-10,4,3,P.lamp);
+  // 座垫
+  rect(ctx,-11,-3,12,3,'#252b3a');
+
+  // 骑手：深蓝裤子与鞋
+  rect(ctx,-7,-5,11,5,'#1f2b4d');rect(ctx,-1,0,10,5,'#26345c');
+  rect(ctx,-2,4,10,3,'#121a2e');rect(ctx,4,6,7,3,'#121a2e');
+  rect(ctx,-8,-7,8,4,'#26345c');
+  // 上衣和手臂
+  rect(ctx,-11,-20,17,14,P.coat);rect(ctx,-10,-19,11,11,P.coatHi);
+  rect(ctx,-10,-19,3,11,P.coatLo);
+  rect(ctx,0,-18,12,4,P.coat);rect(ctx,8,-15,7,4,'#f28c6a');
+  rect(ctx,13,-13,5,3,'#f0a07f');
+  // 头部、头盔
+  rect(ctx,-5,-31,11,10,'#f0a07f');
+  rect(ctx,-7,-33,15,6,P.helm);rect(ctx,-6,-35,12,3,P.helmHi);
+  rect(ctx,5,-31,5,2,P.helmLo);rect(ctx,-5,-26,11,3,'#2a3447');
+  if(smk){
+    // 抽烟骑手：嘴边烟头和烟火，保留外卖骑手造型但一眼能分辨
+    rect(ctx,7,-25,7,2,'#e8e4d8');
+    rect(ctx,13,-26,2,4,Math.random()<.6?'#ff7a2f':'#ffd15c');
+    ctx.globalAlpha=.55;blockCircle(ctx,16,-28,3,'#d9dcd8');ctx.globalAlpha=1;
+  }else{
+    // 普通骑手：浅色口罩、无烟头
+    rect(ctx,2,-26,6,4,'#dcebf2');rect(ctx,4,-25,4,2,'#9fc3d4');
+  }
+  ctx.restore();
+}
+function render(){
+  ctx.save();
+  if(shake>0)ctx.translate(rnd(-shake,shake)|0,rnd(-shake,shake)|0);
+  ctx.drawImage(far,-Math.round(camX*.35),0);
+  ctx.drawImage(near,-Math.round(camX),0);
+  ctx.globalAlpha=.10;rect(ctx,0,0,W,H,'#ff9a5c');ctx.globalAlpha=1;
+
+  ctx.globalAlpha=.085;
+  for(let i=0;i<7;i++){
+    const x=((elapsed*5+i*83)%(W+150))-90,y=30+i*24;
+    blockCircle(ctx,x,y,32,'#ffd2a0');blockCircle(ctx,x+40,y+6,22,'#ffd2a0');
+  }
+  ctx.globalAlpha=1;
+
+  // 红绿灯灯色
+  for(const ix of INTERSECTIONS){
+    const st=lightOf(ix),sx=ix.x-48-camX;
+    if(sx<-30||sx>W+30)continue;
+    const col=st.green?'#63e39a':'#ff5b4c';
+    ctx.globalAlpha=.9;
+    blockCircle(ctx,sx-4,64,5,col);blockCircle(ctx,sx-4,220,5,col);
+    ctx.globalAlpha=.16+.1*Math.sin(elapsed*5);
+    blockCircle(ctx,sx-4,64,13,col);blockCircle(ctx,sx-4,220,13,col);
+    ctx.globalAlpha=1;
+    if(Math.abs(player.x-ix.x)<300){
+      const label=(st.green?'绿灯 ':'红灯 ')+st.remain.toFixed(1)+'s';
+      rect(ctx,sx-34,36,70,14,'rgba(12,17,24,.72)');
+      txt(label,sx+1,43,10,col,'center');
+    }
+  }
+
+  // 路边烟民
+  for(const e of enemies){
+    const ex=e.x-camX;if(ex<-30||ex>W+30)continue;
+    drawPerson(ex,e.y,0,e.dir>0?'left':'right',true,0,e.i);
+    if(e.walk){ctx.globalAlpha=.7;rect(ctx,ex-13,e.y+13,26,3,'#20262c');ctx.globalAlpha=1;}
+    if(e.puff>0){ctx.globalAlpha=e.puff;blockCircle(ctx,ex+13*e.dir,e.y-20,3+e.puff*7,'#d5d9d8');ctx.globalAlpha=1;}
+  }
+  // 不抽烟的普通人：蓝外套、无烟头，和烟民混在一起当背景板
+  for(const p of passersby){
+    const ex=p.x-camX;if(ex<-30||ex>W+30)continue;
+    drawPerson(ex,p.y,0,p.dir>0?'left':'right',false,p.col,p.i);
+    if(p.walk){ctx.globalAlpha=.6;rect(ctx,ex-13,p.y+13,26,3,'#20262c');ctx.globalAlpha=1;}
+  }
+
+  // 骑手
+  for(const c of cyclists){
+    if(c.x-camX<-40||c.x-camX>W+40)continue;
+    drawCyclist(c);
+  }
+  // 烟雾弹幕
+  for(const b of bullets){
+    const a=clamp(Math.min(b.age/.35,(b.life-b.age)/1.2),0,1);
+    const sz=Math.round(b.r*SMOKE_SCALE/2)*2,sx=Math.round(b.x-camX),sy=Math.round(b.y);
+    // 淡淡的外圈就是实际判定边界：比烟团可见边缘再大一圈，避免“看不见的判定”
+    if(Math.abs(sx-W/2)<190){
+      ctx.globalAlpha=a*.16;ctx.strokeStyle='#eef2f0';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(sx,sy,hitRadius(b),0,7);ctx.stroke();
+    }
+    ctx.globalAlpha=a*.92;
+    ctx.drawImage(smokes[b.variant],sx-Math.round(sz/2),sy-Math.round(sz/2),sz,sz);
+  }
+  ctx.globalAlpha=1;
+  for(const q of particles){
+    ctx.globalAlpha=1-q.age/q.life;rect(ctx,q.x-camX,q.y,q.r,q.r,q.col);
+  }
+  ctx.globalAlpha=1;
+
+  if(fanFx>0){
+    const t=1-fanFx/.36,px=player.x-camX,py=player.y;
+    ctx.globalAlpha=(1-t)*.85;ctx.strokeStyle='#dff5f2';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(px,py,10+t*FAN_RANGE,-1.1,1.1);ctx.stroke();
+    for(let i=-1;i<=1;i++)rect(ctx,px+6+t*22,py+i*12,18-t*8,2,'#e8f7f4');
+    ctx.globalAlpha=1;
+  }
+  const px=player.x-camX;
+  if(protect>0){
+    const col=shieldLabel==='防毒面具'?'#8be9ff':'#dff5f2';
+    ctx.globalAlpha=.55+.2*Math.sin(elapsed*12);ctx.strokeStyle=col;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(px,player.y,17,0,7);ctx.stroke();
+    txt(protect.toFixed(1)+'s',px,player.y-46,9,col,'center');ctx.globalAlpha=1;
+  }
+  drawPerson(px,player.y,player.inv,'player');
+  if(shieldFx>0){
+    ctx.globalAlpha=clamp(shieldFx/.9,0,1);
+    txt(shieldLabel+'挡住了',px,player.y-34,10,'#9fe3db','center');ctx.globalAlpha=1;
+  }
+  if(hurtFx>0){
+    // 受击反馈：烟/烟民让人咳嗽，骑手冲撞是危险，绝不再显示“让行”
+    ctx.globalAlpha=clamp(hurtFx/1.1,0,1);
+    txt(hurtLabel,px,player.y-34,12,'#ff6b5b','center');
+    ctx.globalAlpha=1;
+  }else if(bumpFx>0){
+    ctx.globalAlpha=clamp(bumpFx/.2,0,1);
+    txt('让行',px,player.y-34,10,'#ffd76a','center');
+    ctx.globalAlpha=1;
+  }
+
+  // HUD
+  rect(ctx,0,0,W,22,'rgba(12,17,24,.72)');
+  txt('生命',6,11,10,'#cbd2d7');
+  for(let i=0;i<MAX_LIVES;i++)blockCircle(ctx,30+i*6.4,11,3.1,i<player.lives?'#e35b4c':'#3c454e');
+  txt('扇风',96,11,10,'#cbd2d7');
+  rect(ctx,120,7,34,8,'#3b444c');
+  const ready=player.fanCd<=0;
+  rect(ctx,120,7,34*(ready?1:1-player.fanCd/FAN_CD),8,ready?'#7fd3c9':'#5d8c92');
+  txt(ready?'就绪':player.fanCd.toFixed(1),158,11,9,ready?'#9fe3db':'#cbd2d7');
+  txt('擦 '+graze,190,11,10,'#cbd2d7');
+  txt('分 '+String(Math.floor(score)).padStart(5,'0'),234,11,10,'#e6ebee');
+  txt(money+'G',294,11,10,'#ffd76a');
+  txt('口'+masks,330,11,10,'#dff5f2');
+  txt('面'+gasMasks+(gasMasks?'/'+gasUses+'次':''),366,11,10,protect>0?'#8be9ff':'#aeb8be');
+  txt(windLabel,W-8,11,10,'#aeb8be','right');
+
+  if(blockedBy){
+    rect(ctx,W/2-86,26,172,20,'rgba(160,40,32,.85)');
+    txt('红灯！等待 '+blockedBy.st.remain.toFixed(1)+'s',W/2,36,11,'#ffe6d8','center');
+  }
+  rect(ctx,0,H-7,W,7,'rgba(12,17,24,.7)');
+  rect(ctx,0,H-7,W*clamp((player.x-HOME_X)/(MARKET_X-HOME_X),0,1),7,'#d8a74a');
+  txt('家',8,H-17,10,'#eceff0','left');
+  txt(areaName()+' · 距超市 '+Math.max(0,Math.round(MARKET_X-player.x))+'m',W/2,H-17,10,'#eceff0','center');
+  txt('超市',W-8,H-17,10,'#9fe3b8','right');
+
+  if(state===S.TITLE)drawTitle();
+  if(state===S.PAUSE)drawOverlay('暂停','按 P 继续');
+  if(state===S.OVER)drawOverlay('被烟呛倒','走到 '+areaName()+' · 距超市 '+Math.max(0,Math.round(MARKET_X-player.x))+'m\n擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 重来');
+  if(state===S.WIN)drawOverlay('到达超市！','用时 '+elapsed.toFixed(1)+' 秒 · 擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 再走一趟');
+  if(state===S.SHOP)drawOverlay('已回家，改网购','走到门口就拐进去了——放弃步行，直接下单。\n用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟');
+  ctx.restore();
+}
+function drawOverlay(title,sub){
+  ctx.fillStyle='rgba(8,12,18,.74)';ctx.fillRect(0,0,W,H);
+  txt(title,W/2,H/2-34,28,'#f2f4f4','center');
+  ctx.font='12px "Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#c8d0d5';
+  const lines=sub.split('\n');lines.forEach((l,i)=>ctx.fillText(l,W/2,H/2+2+i*20));
+  if(best>0)txt('最佳分数 '+best,W/2,H/2+lines.length*20+8,10,'#c4a86a','center');
+}
+function drawTitle(){
+  ctx.fillStyle='rgba(8,12,18,.84)';ctx.fillRect(0,0,W,H);
+  txt('躲避二手烟！',W/2,26,26,'#f4f5f2','center');
+  txt('横版长路线 · 交通规则 · 防护装备 · 生命 10',W/2,50,10,'#c4a86a','center');
+  txt('—— 操作 ——',W/2,72,11,'#8fd3c9','center');
+  ctx.font='11px "Microsoft YaHei",sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#d6dcdf';
+  [
+    '移动：WASD / 方向键（触屏：按住画面拖动）',
+    '扇风吹开烟雾：空格 / X（半径 46px，CD 1.6 秒） · 暂停 P · 静音 M'
+  ].forEach((l,i)=>ctx.fillText(l,W/2,88+i*16));
+  txt('—— 规则 ——',W/2,120,11,'#8fd3c9','center');
+  [
+    '从左侧的家出发，穿过七个街区走到右侧超市，扣光 10 滴血即失败。',
+    '路中央与上下人行道都有烟民，所有烟雾瞄准玩家，判定比可见边缘外扩一圈。',
+    '红灯停、绿灯行：必须停在停止线后等绿灯；正面遇烟民要上下绕开约 38px。',
+    '撞到抽烟者或抽烟骑手扣 1 滴血；普通人、普通骑手和汽车只挡路不扣血。',
+    '扇风可吹开近身处烟雾；等红灯时烟雾照样追着你打，擦弹得分。'
+  ].forEach((l,i)=>ctx.fillText(l,W/2,136+i*16));
+  txt('—— 装备购买 ——',W/2,222,11,'#8fd3c9','center');
+  [
+    '初始 64G。按 1 买口罩 4G/个（限 5 个），中烟抵挡 0.5 秒。',
+    '按 2 买防毒面具 50G/个（限 1 个），抵挡 2 秒 × 5 次，用完才消失。',
+    '中烟自动消耗装备抵挡；撞击伤害不抵挡。开局前点右侧按钮购买。'
+  ].forEach((l,i)=>ctx.fillText(l,W/2,238+i*16));
+  if(best>0)txt('最佳分数 '+best,W/2,292,10,'#c4a86a','center');
+  if(Math.floor(performance.now()/500)%2===0)txt('—— 点击任意处开始游戏 ——',W/2,312,15,'#ffcf6b','center');
+}
+
+let last=performance.now();
+function loop(now){const dt=Math.min(.033,(now-last)/1000);last=now;update(dt);render();requestAnimationFrame(loop);}
+requestAnimationFrame(loop);
+
+function startGame(){
+  // 标题页买的装备带进本局；失败/通关/彩蛋后重开才重置余额和装备
+  if(state!==S.TITLE)reset();
+  state=S.PLAY;canvas.focus();sfx(440,.12,'triangle',.05);updateShopUI();
+}
+window.addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(['arrowleft','arrowright','arrowup','arrowdown',' '].includes(k))e.preventDefault();
+  if(k==='arrowleft'||k==='a')keys.left=true;
+  if(k==='arrowright'||k==='d')keys.right=true;
+  if(k==='arrowup'||k==='w')keys.up=true;
+  if(k==='arrowdown'||k==='s')keys.down=true;
+  if(k===' '||k==='x')useFan();
+  if(k==='enter'){if(state===S.TITLE||state===S.OVER||state===S.WIN||state===S.SHOP)startGame();}
+  if(k==='p'||k==='escape'){if(state===S.PLAY)state=S.PAUSE;else if(state===S.PAUSE)state=S.PLAY;}
+  if(k==='m')toggleSound();
+  if(k==='1')buyMask();
+  if(k==='2')buyGasMask();
+});
+window.addEventListener('keyup',e=>{
+  const k=e.key.toLowerCase();
+  if(k==='arrowleft'||k==='a')keys.left=false;
+  if(k==='arrowright'||k==='d')keys.right=false;
+  if(k==='arrowup'||k==='w')keys.up=false;
+  if(k==='arrowdown'||k==='s')keys.down=false;
+});
+function pointerPos(e){
+  const r=canvas.getBoundingClientRect();
+  return{x:(e.clientX-r.left)/r.width*W+camX,y:(e.clientY-r.top)/r.height*H};
+}
+canvas.addEventListener('pointerdown',e=>{
+  if(state!==S.PLAY){startGame();return;}
+  touchDown=true;touchTarget=pointerPos(e);
+  try{canvas.setPointerCapture(e.pointerId);}catch(err){}
+});
+canvas.addEventListener('pointermove',e=>{if(touchDown)touchTarget=pointerPos(e);});
+canvas.addEventListener('pointerup',()=>{touchDown=false;touchTarget=null;});
+canvas.addEventListener('pointercancel',()=>{touchDown=false;touchTarget=null;});
+document.getElementById('fanBtn').addEventListener('pointerdown',e=>{e.preventDefault();useFan();});
+function toggleSound(){muted=!muted;document.getElementById('soundBtn').textContent='声音：'+(muted?'关':'开');}
+document.getElementById('soundBtn').addEventListener('click',toggleSound);
+document.getElementById('buyMaskBtn').addEventListener('click',buyMask);
+document.getElementById('buyGasBtn').addEventListener('click',buyGasMask);
+})();
+</script>
+</body>
+</html>
