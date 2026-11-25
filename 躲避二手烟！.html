@@ -490,7 +490,9 @@ function settleRun(home){
   if(!home&&maskActive>0)maskBank=Math.max(0,maskBank-maskActive);
   runBonus=Math.floor(score)>BONUS_SCORE;
   if(runBonus)maskBank++;
-  carryMoney=money;
+  // 余额继承同样需要 5000 分门槛：分数不足则作废、下局只给 64G，堵住开局速死反复刷钱；
+  // 回家不加 64G、本身不刷钱，保留继承
+  carryMoney=(home||runBonus)?money:0;
   // 回家结算保留本局剩余装备供下局继承；死亡/通关仍不带装备
   homeGear=home?{masks,gasMasks,gasUses}:{masks:0,gasMasks:0,gasUses:0};
   saveProgress();
@@ -1319,7 +1321,7 @@ function render(){
   drawFanButton();
   ctx.restore();
 }
-function bonusLine(){return runBonus?'\n本局超过 '+BONUS_SCORE+' 分 · 下一局口罩可多买 1 个':'';}
+function bonusLine(){if(homeExit)return '\n回家网购 · 下局余额照常保留（不加 64G）';return runBonus?'\n超过 '+BONUS_SCORE+' 分 · 下局继承余额、口罩多买 1 个':'\n未达 '+BONUS_SCORE+' 分 · 下局余额重置为 64G';}
 function drawJoystick(){
   if(!IS_TOUCH||state!==S.PLAY)return;
   const mag=Math.hypot(joyDX,joyDY),k=Math.min(1,mag/JOY_R);
