@@ -58,16 +58,19 @@
 (() => {
 'use strict';
 const W=480, H=360, WORLD_W=5400, HOME_X=80, MARKET_X=5320;
+const IS_TOUCH=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const FAN_CD=2.08, FAN_RANGE=46;
 const MASK_COST=4, GAS_COST=50, MAX_MASKS=5, MAX_GAS=1;
-const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1';
+const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1', MONEY_KEY='dssm.lastMoney.v1';
 const MASK_TIME=.5, GAS_TIME=2, GAS_USES=5;
 const MAX_RIDERS=10, SMOKE_MIN_SPEED=22, RIDER_SPEED=224; // 骑手速度为玩家步行(112)的 2 倍
 // 烟雾贴图边长 = 半径 × 3.4；可见半径约为边长的 0.4 倍，命中判定再向外扩一圈
 const SMOKE_SCALE=3.4, HIT_RING=5;
+const BIG_SMOKE_R=14; // 大烟雾命中扣 1 血，小烟雾扣 0.5
 // 角色比例：步行的人取骑手身高的约 80%，汽车保持放大后的尺寸
 const PERSON_SCALE=1.28, CAR_SCALE=1.35, BODY_PAD=10;
 function hitRadius(b){return b.r*SMOKE_SCALE*.4+HIT_RING;}
+function smokeDamage(b){return b.maxR>=BIG_SMOKE_R?1:.5;}
 // 路线分段：每段有独立的天空、楼体、路面、店招与地标，进入时有门架提示
 // 夕阳下的北京：天空由紫红过渡到橘金，建筑与路面统一压成暖调
 const SEGMENTS=[
@@ -463,18 +466,43 @@ let cycleTimer,blockedBy,overShake;
 let graze=0,score=0,best=0;
 let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
 // 高分循环：单局超过 5000 分，下一局口罩购买上限 +1；额度跨局保存，进入下一局时生效
-let maskBank=0,maskActive=0,runBonus=false,settled=false;
-function loadProgress(){try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}}
-function saveProgress(){try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}}
+// 余额同样跨局继承：上一局没花完的钱留到下一局继续用
+let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=64;
+function loadProgress(){
+  try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}
+  try{const v=parseInt(localStorage.getItem(MONEY_KEY)||'64',10);carryMoney=Number.isFinite(v)&&v>=0?v:64;}catch(err){carryMoney=64;}
+}
+function saveProgress(){
+  try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}
+  try{localStorage.setItem(MONEY_KEY,String(carryMoney));}catch(err){}
+}
 function maskLimit(){return MAX_MASKS+(state===S.TITLE?maskBank:maskActive);}
 function settleRun(){
   if(settled)return;
-  settled=true;runBonus=Math.floor(score)>BONUS_SCORE;
-  if(runBonus){maskBank++;saveProgress();}
+  settled=true;
+  // 本局用掉的额度此时才扣除：中途刷新重开仍保留“下一局多买一个”的奖励
+  if(maskActive>0)maskBank=Math.max(0,maskBank-maskActive);
+  runBonus=Math.floor(score)>BONUS_SCORE;
+  if(runBonus)maskBank++;
+  carryMoney=money;saveProgress();
 }
 const MAX_LIVES=10;
 const keys={left:false,right:false,up:false,down:false};
 let touchTarget=null,touchDown=false;
+// 手机端左下角半透明虚拟摇杆：按指针 id 独立跟踪，不与地图拖动移动冲突
+const JOY_X=54,JOY_Y=H-70,JOY_R=30;
+let joyId=null,joyDX=0,joyDY=0,joyActive=false;
+function localPos(e){
+  const r=canvas.getBoundingClientRect();
+  return{x:(e.clientX-r.left)/r.width*W,y:(e.clientY-r.top)/r.height*H};
+}
+function setJoy(e){
+  const p=localPos(e);let x=p.x-JOY_X,y=p.y-JOY_Y;
+  const d=Math.hypot(x,y);
+  if(d>JOY_R){x*=JOY_R/d;y*=JOY_R/d;}
+  joyDX=x;joyDY=y;
+}
+function resetJoy(){joyId=null;joyDX=0;joyDY=0;joyActive=false;}
 
 // 三条射击线：y=232 为路中央，y=132 / y=338 分别为上下两侧人行道
 const ENEMY_DEFS=[
@@ -553,7 +581,7 @@ function reset(){
   bullets=[];particles=[];enemies=makeEnemies();passersby=makePassersby();cyclists=[];
   elapsed=0;wind=0;windLabel='微风';camX=0;shake=0;fanFx=0;bumpFx=0;bumpSfx=0;hurtFx=0;hurtLabel='';
   cycleTimer=3.5;blockedBy=null;overShake=0;graze=0;score=0;
-  money=64;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
+  money=carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
   INTERSECTIONS.forEach((ix,k)=>{
     ix.waitSpawned=true;ix.wasGreen=lightOf(ix).green;ix.topUpIn=0;
     WAITING_RIDERS[k].slice(0,2).forEach(([y,s,c],slot)=>cyclists.push({
@@ -896,17 +924,19 @@ function update(dt){
 
   let dx=0,dy=0;
   if(keys.left)dx--;if(keys.right)dx++;if(keys.up)dy--;if(keys.down)dy++;
-  if(touchDown&&touchTarget){
+  if(!joyActive&&touchDown&&touchTarget){
     const ddx=touchTarget.x-player.x,ddy=touchTarget.y-player.y,d=Math.hypot(ddx,ddy);
     if(d>3){dx=ddx/d;dy=ddy/d;}
   }
+  if(joyActive){dx=joyDX/JOY_R;dy=joyDY/JOY_R;}
   const sp=player.speed;
-  const d=Math.hypot(dx,dy)||1,prevX=player.x;
+  // 摇杆保留模拟量：轻推慢走，推到底全速；键盘与拖动仍按原样归一化
+  const d=joyActive?Math.max(1,Math.hypot(dx,dy)):(Math.hypot(dx,dy)||1),prevX=player.x;
   player.x=clamp(player.x+dx/d*sp*dt,HOME_X-30,WORLD_W-12);
   // 家门口允许向上走进门里，触发网购彩蛋
   const atHomeDoor=player.x>58&&player.x<100;
   player.y=clamp(player.y+dy/d*sp*dt,atHomeDoor?118:150,320);
-  player.vy=(keys.up?-sp:keys.down?sp:0);
+  player.vy=joyActive?dy/d*sp:(keys.up?-sp:keys.down?sp:0);
 
   // 实体碰撞：路人与骑手不可穿过；红灯：必须停在停止线后
   resolveBodies();
@@ -1013,7 +1043,7 @@ function update(dt){
       b.grazed=true;graze++;
       if(player.inv<=0&&!useSmokeProtection())hit('咳',.5);
     }
-    if(player.inv<=0&&dist<hr+player.r){if(!useSmokeProtection())hit();break;}
+    if(player.inv<=0&&dist<hr+player.r){if(!useSmokeProtection())hit('咳',smokeDamage(b));break;}
   }
   for(let i=particles.length-1;i>=0;i--){
     const q=particles[i];q.age+=dt;q.x+=q.vx*dt;q.y+=q.vy*dt;q.vx*=.97;q.vy*=.97;
@@ -1269,10 +1299,21 @@ function render(){
   if(state===S.PAUSE)drawOverlay('暂停','按 P 继续');
   if(state===S.OVER)drawOverlay('被烟呛倒','走到 '+areaName()+' · 距超市 '+Math.max(0,Math.round(MARKET_X-player.x))+'m\n擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 重来'+bonusLine());
   if(state===S.WIN)drawOverlay('到达超市！','用时 '+elapsed.toFixed(1)+' 秒 · 擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 再走一趟'+bonusLine());
-  if(state===S.SHOP)drawOverlay('已回家，改网购','走到门口就拐进去了——放弃步行，直接下单。\n用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟'+bonusLine());
+  if(state===S.SHOP)drawOverlay('放弃出门，还是回家网购算了','用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟'+bonusLine());
+  drawJoystick();
   ctx.restore();
 }
 function bonusLine(){return runBonus?'\n本局超过 '+BONUS_SCORE+' 分 · 下一局口罩可多买 1 个':'';}
+function drawJoystick(){
+  if(!IS_TOUCH||state!==S.PLAY)return;
+  const mag=Math.hypot(joyDX,joyDY),k=Math.min(1,mag/JOY_R);
+  const hx=JOY_X+(mag?joyDX/mag*JOY_R*.55*k:0),hy=JOY_Y+(mag?joyDY/mag*JOY_R*.55*k:0);
+  ctx.save();ctx.globalAlpha=joyActive?.5:.32;
+  blockCircle(ctx,JOY_X,JOY_Y,JOY_R,'#0d171b');
+  ctx.strokeStyle='#c8e8e2';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(JOY_X,JOY_Y,JOY_R,0,Math.PI*2);ctx.stroke();
+  blockCircle(ctx,hx,hy,10,joyActive?'#dff7f1':'#9dbdb8');
+  ctx.restore();
+}
 function drawOverlay(title,sub){
   ctx.fillStyle='rgba(8,12,18,.74)';ctx.fillRect(0,0,W,H);
   txt(title,W/2,H/2-34,28,'#f2f4f4','center');
@@ -1330,7 +1371,7 @@ requestAnimationFrame(loop);
 function startGame(){
   // 标题页买的装备带进本局；失败/通关/彩蛋后重开才重置余额和装备
   if(state!==S.TITLE)reset();
-  maskActive=maskBank;maskBank=0;saveProgress();runBonus=false;settled=false;
+  maskActive=maskBank;runBonus=false;settled=false;
   state=S.PLAY;canvas.focus();sfx(440,.12,'triangle',.05);updateShopUI();
 }
 window.addEventListener('keydown',e=>{
@@ -1373,12 +1414,20 @@ function titleShopHit(e){
 canvas.addEventListener('pointerdown',e=>{
   if(state===S.TITLE){if(titleShopHit(e))return;startGame();return;}
   if(state!==S.PLAY){startGame();return;}
+  if(IS_TOUCH){
+    const p=localPos(e);
+    if(Math.hypot(p.x-JOY_X,p.y-JOY_Y)<=JOY_R+18){
+      joyId=e.pointerId;joyActive=true;setJoy(e);
+      try{canvas.setPointerCapture(e.pointerId);}catch(err){}
+      return;
+    }
+  }
   touchDown=true;touchTarget=pointerPos(e);
   try{canvas.setPointerCapture(e.pointerId);}catch(err){}
 });
-canvas.addEventListener('pointermove',e=>{if(touchDown)touchTarget=pointerPos(e);});
-canvas.addEventListener('pointerup',()=>{touchDown=false;touchTarget=null;});
-canvas.addEventListener('pointercancel',()=>{touchDown=false;touchTarget=null;});
+canvas.addEventListener('pointermove',e=>{if(joyActive&&e.pointerId===joyId)setJoy(e);else if(touchDown)touchTarget=pointerPos(e);});
+canvas.addEventListener('pointerup',e=>{if(e.pointerId===joyId)resetJoy();touchDown=false;touchTarget=null;});
+canvas.addEventListener('pointercancel',e=>{if(e.pointerId===joyId)resetJoy();touchDown=false;touchTarget=null;});
 document.getElementById('fanBtn').addEventListener('pointerdown',e=>{e.preventDefault();useFan();});
 function toggleSound(){muted=!muted;document.getElementById('soundBtn').textContent='声音：'+(muted?'关':'开');}
 document.getElementById('soundBtn').addEventListener('click',toggleSound);
