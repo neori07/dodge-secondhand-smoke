@@ -46,7 +46,7 @@
   <div data-page-node-id="zlsGvWjQwFE1ElPghoYMLO" class="layout">
     <div data-page-node-id="fWv6VQxvv8xl8yCyfEM1Wj">
       <div data-page-node-id="xdAJ2ZulYZiUMBGnJwpoZu" id="stage"><canvas data-page-node-id="mUi0SVbw3462S10OVYvhnA" height="360" id="game" tabindex="0" width="480"></canvas></div>
-      <div data-page-node-id="Af3rBccLEQmam40s0VPDCJ" id="touchControls">
+      <div data-page-node-id="Af3rBccLEQmam40s0VPDCJ" id="touchControls" style="display:none">
         <button data-page-node-id="mkvGhPXpHGZVDsLkvOAizT" id="fanBtn"><!--pnid:erHGIjoSbtzBo4apmHH43x-->扇风（46px / CD 2.1s）</button>
       </div>
       <div data-page-node-id="lrSKVZQ6kDlpwvlA0q8O8q" id="shopHint"><!--pnid:Qx6nr5UvHnI5DP4Agzoggy-->装备在开始画面点击购买 · 电脑可按 1 / 2 · 中烟自动抵挡（优先防毒面具），撞击不抵挡　<button data-page-node-id="4M1PZppokr0n2GHCuD8jyl" id="soundBtn" style="vertical-align:middle"><!--pnid:TopKMcEk02rX2Ua1y9vA9e-->声音：开</button></div>
@@ -61,7 +61,7 @@ const W=480, H=360, WORLD_W=5400, HOME_X=80, MARKET_X=5320;
 const IS_TOUCH=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const FAN_CD=2.08, FAN_RANGE=46;
 const MASK_COST=4, GAS_COST=50, MAX_MASKS=5, MAX_GAS=1;
-const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1', MONEY_KEY='dssm.lastMoney.v1';
+const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1', MONEY_KEY='dssm.lastMoney.v1', HOME_KEY='dssm.homeExit.v1';
 const MASK_TIME=.5, GAS_TIME=2, GAS_USES=5;
 const MAX_RIDERS=10, SMOKE_MIN_SPEED=22, RIDER_SPEED=224; // 骑手速度为玩家步行(112)的 2 倍
 // 烟雾贴图边长 = 半径 × 3.4；可见半径约为边长的 0.4 倍，命中判定再向外扩一圈
@@ -467,21 +467,24 @@ let graze=0,score=0,best=0;
 let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
 // 高分循环：单局超过 5000 分，下一局口罩购买上限 +1；额度跨局保存，进入下一局时生效
 // 余额循环：每局补充 64G 基础资金，并继承上局没花完的余额，保证每局都有钱买装备
-let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=0;
+let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=0,homeExit=false;
 function loadProgress(){
   try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}
   try{const v=parseInt(localStorage.getItem(MONEY_KEY)||'0',10);carryMoney=Number.isFinite(v)&&v>=0?v:0;}catch(err){carryMoney=0;}
+  try{homeExit=localStorage.getItem(HOME_KEY)==='1';}catch(err){homeExit=false;}
 }
 function saveProgress(){
   try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}
   try{localStorage.setItem(MONEY_KEY,String(carryMoney));}catch(err){}
+  try{localStorage.setItem(HOME_KEY,homeExit?'1':'0');}catch(err){}
 }
 function maskLimit(){return MAX_MASKS+(state===S.TITLE?maskBank:maskActive);}
-function settleRun(){
+function settleRun(home){
   if(settled)return;
   settled=true;
-  // 本局用掉的额度此时才扣除：中途刷新重开仍保留“下一局多买一个”的奖励
-  if(maskActive>0)maskBank=Math.max(0,maskBank-maskActive);
+  homeExit=!!home;
+  // 回家结算：额度不消耗，下一局口罩上限照常继承；死亡/通关才扣掉本局用掉的额度
+  if(!home&&maskActive>0)maskBank=Math.max(0,maskBank-maskActive);
   runBonus=Math.floor(score)>BONUS_SCORE;
   if(runBonus)maskBank++;
   carryMoney=money;saveProgress();
@@ -491,6 +494,8 @@ const keys={left:false,right:false,up:false,down:false};
 let touchTarget=null,touchDown=false;
 // 手机端左下角半透明虚拟摇杆：按指针 id 独立跟踪，不与地图拖动移动冲突
 const JOY_X=54,JOY_Y=H-70,JOY_R=30;
+// 画面内扇风按钮：右下角，与左下摇杆对称，常驻显示
+const FAN_BTN_X=W-50,FAN_BTN_Y=H-52,FAN_BTN_R=27;
 let joyId=null,joyDX=0,joyDY=0,joyActive=false;
 function localPos(e){
   const r=canvas.getBoundingClientRect();
@@ -581,7 +586,7 @@ function reset(){
   bullets=[];particles=[];enemies=makeEnemies();passersby=makePassersby();cyclists=[];
   elapsed=0;wind=0;windLabel='微风';camX=0;shake=0;fanFx=0;bumpFx=0;bumpSfx=0;hurtFx=0;hurtLabel='';
   cycleTimer=3.5;blockedBy=null;overShake=0;graze=0;score=0;
-  money=64+carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
+  money=(homeExit?0:64)+carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
   INTERSECTIONS.forEach((ix,k)=>{
     ix.waitSpawned=true;ix.wasGreen=lightOf(ix).green;ix.topUpIn=0;
     WAITING_RIDERS[k].slice(0,2).forEach(([y,s,c],slot)=>cyclists.push({
@@ -798,9 +803,7 @@ function win(){
 }
 // 彩蛋：开局拐进家门，直接放弃步行改网购
 function shopEnd(){
-  state=S.SHOP;settleRun();
-  // 回家网购在起点即可触发，若计入余额继承会被反复刷钱：此局余额作废，下局从 64G 重新开始
-  carryMoney=0;saveProgress();
+  state=S.SHOP;settleRun(true);
   best=Math.max(best,Math.floor(score));updateShopUI();
   puff(player.x,player.y,14,'#ffd07a');
   sfx(330,.18,'triangle',.05);setTimeout(()=>sfx(660,.35,'sine',.05),180);
@@ -1304,6 +1307,7 @@ function render(){
   if(state===S.WIN)drawOverlay('到达超市！','用时 '+elapsed.toFixed(1)+' 秒 · 擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 再走一趟'+bonusLine());
   if(state===S.SHOP)drawOverlay('放弃出门，还是回家网购算了','用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟'+bonusLine());
   drawJoystick();
+  drawFanButton();
   ctx.restore();
 }
 function bonusLine(){return runBonus?'\n本局超过 '+BONUS_SCORE+' 分 · 下一局口罩可多买 1 个':'';}
@@ -1315,6 +1319,17 @@ function drawJoystick(){
   blockCircle(ctx,JOY_X,JOY_Y,JOY_R,'#0d171b');
   ctx.strokeStyle='#c8e8e2';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(JOY_X,JOY_Y,JOY_R,0,Math.PI*2);ctx.stroke();
   blockCircle(ctx,hx,hy,10,joyActive?'#dff7f1':'#9dbdb8');
+  ctx.restore();
+}
+function drawFanButton(){
+  if(state!==S.PLAY)return;
+  const ready=player.fanCd<=0;
+  ctx.save();ctx.globalAlpha=ready?.92:.6;
+  blockCircle(ctx,FAN_BTN_X,FAN_BTN_Y,FAN_BTN_R,ready?'#17453f':'#1b232b');
+  ctx.strokeStyle=ready?'#7fd3c9':'#4a5a60';ctx.lineWidth=2;
+  ctx.beginPath();ctx.arc(FAN_BTN_X,FAN_BTN_Y,FAN_BTN_R,0,Math.PI*2);ctx.stroke();
+  txt('扇风',FAN_BTN_X,FAN_BTN_Y-3,11,ready?'#e2f7f3':'#87919a','center');
+  txt(ready?'点击':player.fanCd.toFixed(1)+'s',FAN_BTN_X,FAN_BTN_Y+11,9,ready?'#8fd3c9':'#cbd2d7','center');
   ctx.restore();
 }
 function drawOverlay(title,sub){
@@ -1417,6 +1432,8 @@ function titleShopHit(e){
 canvas.addEventListener('pointerdown',e=>{
   if(state===S.TITLE){if(titleShopHit(e))return;startGame();return;}
   if(state!==S.PLAY){startGame();return;}
+  const fp=localPos(e);
+  if(Math.hypot(fp.x-FAN_BTN_X,fp.y-FAN_BTN_Y)<=FAN_BTN_R+8){useFan();return;}
   if(IS_TOUCH){
     const p=localPos(e);
     if(Math.hypot(p.x-JOY_X,p.y-JOY_Y)<=JOY_R+18){
