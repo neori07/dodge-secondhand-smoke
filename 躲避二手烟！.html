@@ -798,7 +798,10 @@ function win(){
 }
 // 彩蛋：开局拐进家门，直接放弃步行改网购
 function shopEnd(){
-  state=S.SHOP;settleRun();best=Math.max(best,Math.floor(score));updateShopUI();
+  state=S.SHOP;settleRun();
+  // 回家网购在起点即可触发，若计入余额继承会被反复刷钱：此局余额作废，下局从 64G 重新开始
+  carryMoney=0;saveProgress();
+  best=Math.max(best,Math.floor(score));updateShopUI();
   puff(player.x,player.y,14,'#ffd07a');
   sfx(330,.18,'triangle',.05);setTimeout(()=>sfx(660,.35,'sine',.05),180);
 }
