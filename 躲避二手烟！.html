@@ -504,6 +504,37 @@ let touchTarget=null,touchDown=false;
 const JOY_X=54,JOY_Y=H-70,JOY_R=30;
 // 画面内扇风按钮：右下角，与左下摇杆对称，常驻显示
 const FAN_BTN_X=W-50,FAN_BTN_Y=H-52,FAN_BTN_R=27;
+// 手机游戏内购买按钮：左上角，与红灯提示/摇杆/扇风按钮均不重叠，仅触屏 PLAY 态显示
+const PLAY_BUY={x:8,y:46,w:118,h:24,gap:28};
+function playBuyButtons(){
+  return [
+    {id:'mask',x:PLAY_BUY.x,y:PLAY_BUY.y,w:PLAY_BUY.w,h:PLAY_BUY.h,label:'+口罩 4G',can:money>=MASK_COST&&masks<maskLimit(),sub:'口 '+masks+'/'+maskLimit()},
+    {id:'gas',x:PLAY_BUY.x,y:PLAY_BUY.y+PLAY_BUY.gap,w:PLAY_BUY.w,h:PLAY_BUY.h,label:'+面罩 50G',can:money>=GAS_COST&&gasMasks<MAX_GAS,sub:'面 '+gasMasks+(gasMasks?'/'+gasUses+'次':'')}
+  ];
+}
+function playBuyHit(e){
+  if(!IS_TOUCH||state!==S.PLAY)return false;
+  const r=canvas.getBoundingClientRect();
+  const lx=(e.clientX-r.left)/r.width*W,ly=(e.clientY-r.top)/r.height*H;
+  for(const b of playBuyButtons()){
+    if(lx>=b.x&&lx<=b.x+b.w&&ly>=b.y&&ly<=b.y+b.h){
+      if(b.can){if(b.id==='mask')buyMask();else buyGasMask();}
+      else sfx(120,.08,'square',.02);
+      return true;
+    }
+  }
+  return false;
+}
+function drawPlayBuy(){
+  if(!IS_TOUCH||state!==S.PLAY)return;
+  for(const b of playBuyButtons()){
+    rect(ctx,b.x,b.y,b.w,b.h,b.can?'rgba(23,69,63,.82)':'rgba(27,35,43,.78)');
+    ctx.lineWidth=1;ctx.strokeStyle=b.can?'#5fb6a5':'#3a444c';
+    ctx.strokeRect(Math.round(b.x)+.5,Math.round(b.y)+.5,Math.round(b.w)-1,Math.round(b.h)-1);
+    txt(b.label,b.x+6,b.y+b.h/2,10,b.can?'#e2f7f3':'#87919a','left');
+    txt(b.sub,b.x+b.w-6,b.y+b.h/2,9,b.can?'#8fd3c9':'#6f7a83','right');
+  }
+}
 let joyId=null,joyDX=0,joyDY=0,joyActive=false;
 function localPos(e){
   const r=canvas.getBoundingClientRect();
@@ -1319,9 +1350,10 @@ function render(){
   if(state===S.SHOP)drawOverlay('放弃出门，还是回家网购算了','用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟'+bonusLine());
   drawJoystick();
   drawFanButton();
+  drawPlayBuy();
   ctx.restore();
 }
-function bonusLine(){if(homeExit)return '\n回家网购 · 下局余额照常保留（不加 64G）';return runBonus?'\n超过 '+BONUS_SCORE+' 分 · 下局继承余额、口罩多买 1 个':'\n未达 '+BONUS_SCORE+' 分 · 下局余额重置为 64G';}
+function bonusLine(){if(homeExit)return '\n回家网购 · 下局余额照常保留';return runBonus?'\n超过 '+BONUS_SCORE+' 分 · 下局继承余额、口罩多买 1 个':'\n未达 '+BONUS_SCORE+' 分 · 下局余额重置为 64G';}
 function drawJoystick(){
   if(!IS_TOUCH||state!==S.PLAY)return;
   const mag=Math.hypot(joyDX,joyDY),k=Math.min(1,mag/JOY_R);
@@ -1443,6 +1475,7 @@ function titleShopHit(e){
 canvas.addEventListener('pointerdown',e=>{
   if(state===S.TITLE){if(titleShopHit(e))return;startGame();return;}
   if(state!==S.PLAY){startGame();return;}
+  if(playBuyHit(e))return;
   const fp=localPos(e);
   if(Math.hypot(fp.x-FAN_BTN_X,fp.y-FAN_BTN_Y)<=FAN_BTN_R+8){useFan();return;}
   if(IS_TOUCH){
