@@ -14,9 +14,10 @@
   .top{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
   h1{font-size:22px;margin:0;letter-spacing:.5px}
   .tag{font-size:12px;color:var(--sub);border:1px solid var(--line);border-radius:20px;padding:3px 10px;background:var(--paper)}
-  .layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:18px;align-items:start}
+  .layout{display:grid;grid-template-columns:1fr;gap:18px;align-items:start}
   @media(max-width:820px){.layout{grid-template-columns:1fr}}
   #stage{position:relative;background:#111722;border:3px solid #111722;border-radius:10px;
+    max-width:760px;margin:0 auto;
     box-shadow:0 10px 30px rgba(20,28,45,.18);overflow:hidden}
   canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;touch-action:none}
   .panel{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:16px;border-radius:10px}
@@ -28,13 +29,12 @@
   .warn{margin-top:12px;background:#fff5f3;border:1px solid #f2cfc9;color:#9b3527;
     border-radius:8px;padding:10px 12px;font-size:12px;line-height:1.7}
   .foot{font-size:12px;color:var(--sub);margin-top:14px;line-height:1.7}
-  #touchControls{display:none;gap:10px;margin-top:12px}
+  #touchControls{display:none;gap:10px;margin:12px auto 0;max-width:760px}
   #touchControls button{flex:1;padding:14px;border-radius:8px;border:1px solid var(--line);
     background:#fff;color:var(--ink);font-size:15px;font-weight:600;touch-action:none}
   @media(pointer:coarse){#touchControls{display:flex}}
-  #soundBtn{float:right;font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--sub);cursor:pointer}
-  .shopBtn{font-size:11px;padding:4px 9px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink);cursor:pointer}
-  .shopBtn:disabled{opacity:.45;cursor:not-allowed}
+  #soundBtn{font-size:11px;padding:3px 9px;border:1px solid var(--line);border-radius:20px;background:#fff;color:var(--sub);cursor:pointer}
+  #shopHint{max-width:760px;margin:0 auto;text-align:center;font-size:11px;color:var(--sub);line-height:1.6}
 </style>
 </head>
 <body data-page-node-id="DGBMdgraQffg8LwNIRM7Rg">
@@ -47,20 +47,9 @@
     <div data-page-node-id="fWv6VQxvv8xl8yCyfEM1Wj">
       <div data-page-node-id="xdAJ2ZulYZiUMBGnJwpoZu" id="stage"><canvas data-page-node-id="mUi0SVbw3462S10OVYvhnA" height="360" id="game" tabindex="0" width="480"></canvas></div>
       <div data-page-node-id="Af3rBccLEQmam40s0VPDCJ" id="touchControls">
-        <button data-page-node-id="mkvGhPXpHGZVDsLkvOAizT" id="fanBtn"><!--pnid:erHGIjoSbtzBo4apmHH43x-->扇风（46px / CD 1.6s）</button>
+        <button data-page-node-id="mkvGhPXpHGZVDsLkvOAizT" id="fanBtn"><!--pnid:erHGIjoSbtzBo4apmHH43x-->扇风（46px / CD 2.1s）</button>
       </div>
-    </div>
-    <div data-page-node-id="dzbztDkSPAHVwk66pxjTGI">
-      <div data-page-node-id="78KoIQnygfk4xXqcN2O43Q" class="panel" style="margin-top:14px">
-        <h2 data-page-node-id="crEkdHUdsTbXmskLSiqcTF"><!--pnid:atnpR5pyHpJjCROcKuQGrJ-->装备补给（开局前 / 游戏中按 1、2 购买）</h2>
-        <div data-page-node-id="hXAOSBQkcSUBDrzEd6fmX2" class="row"><span data-page-node-id="KcNPQz7eGfJXWiIV6Hpvqs"><!--pnid:d0a9Y305Lk6N4LkTdGgjKz-->余额</span><b data-page-node-id="4jq8kzp4Q9TDvcLjK1gfcK" id="moneyLabel"><!--pnid:3KEeo0nmurRgam8cPf637o-->64 G</b></div>
-        <div data-page-node-id="Z7xTZSGi0XrXERUiMgcIOJ" class="row"><span data-page-node-id="abc5w6U4qsOHGIJfOa250t"><!--pnid:kQYV6QptNfvJpQY5aZhnR9-->口罩 · 抵挡烟雾 0.5 秒 · 最多 5 个</span>
-          <button data-page-node-id="0E7muN5t9nUnTzmXB5CTwW" class="shopBtn" id="buyMaskBtn"><!--pnid:JVbmzZE66bcpSrPmgST0iw-->买 1 个 / 4G（<span data-page-node-id="0vZRfwov5fZfUTgVneeUEO" id="maskLabel"><!--pnid:J86g1FjEKnUEcfLAhcKyB2-->0</span><!--pnid:fJHR2BrGKXzs0Bbjw2ZCJA-->/5）</button></div>
-        <div data-page-node-id="4FJdtTNjfT8LwHREiF37wP" class="row"><span data-page-node-id="V83YxlbRJPmpEbrJBf5u6C"><!--pnid:6mIpN7L9Li2xCamMXKSm2e-->防毒面具 · 抵挡烟雾 2 秒 × 5 次 · 最多 1 个</span>
-          <button data-page-node-id="ZFd3ucSGIdaUzFreVbmnxY" class="shopBtn" id="buyGasBtn"><!--pnid:Y2IFJoCLzmvd1rOEQsU7cl-->买 1 个 / 50G（<span data-page-node-id="mJ46P09sgym2avPjibSILE" id="gasLabel"><!--pnid:AVjw9MSYDHAiGJ9w33HuNX-->0</span><!--pnid:MKQhs7EQkWRDvGDdDmTDlL-->/1）</button></div>
-        <div data-page-node-id="lrSKVZQ6kDlpwvlA0q8O8q" class="foot" style="margin-top:8px"><!--pnid:Qx6nr5UvHnI5DP4Agzoggy-->中烟时自动消耗：优先防毒面具（每次扣 1 次次数，5 次用完才消失），其次口罩；抵挡期间不扣血，撞人仍会扣血。</div>
-      </div>
-      <button data-page-node-id="4M1PZppokr0n2GHCuD8jyl" id="soundBtn" style="margin-top:12px"><!--pnid:TopKMcEk02rX2Ua1y9vA9e-->声音：开</button>
+      <div data-page-node-id="lrSKVZQ6kDlpwvlA0q8O8q" id="shopHint"><!--pnid:Qx6nr5UvHnI5DP4Agzoggy-->装备在开始画面点击购买 · 电脑可按 1 / 2 · 中烟自动抵挡（优先防毒面具），撞击不抵挡　<button data-page-node-id="4M1PZppokr0n2GHCuD8jyl" id="soundBtn" style="vertical-align:middle"><!--pnid:TopKMcEk02rX2Ua1y9vA9e-->声音：开</button></div>
     </div>
   </div>
 </div>
@@ -69,8 +58,9 @@
 (() => {
 'use strict';
 const W=480, H=360, WORLD_W=5400, HOME_X=80, MARKET_X=5320;
-const FAN_CD=1.6, FAN_RANGE=46;
+const FAN_CD=2.08, FAN_RANGE=46;
 const MASK_COST=4, GAS_COST=50, MAX_MASKS=5, MAX_GAS=1;
+const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1';
 const MASK_TIME=.5, GAS_TIME=2, GAS_USES=5;
 const MAX_RIDERS=10, SMOKE_MIN_SPEED=22, RIDER_SPEED=224; // 骑手速度为玩家步行(112)的 2 倍
 // 烟雾贴图边长 = 半径 × 3.4；可见半径约为边长的 0.4 倍，命中判定再向外扩一圈
@@ -472,6 +462,16 @@ let player,bullets,particles,enemies,cyclists,passersby,elapsed,wind,camX,shake,
 let cycleTimer,blockedBy,overShake;
 let graze=0,score=0,best=0;
 let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
+// 高分循环：单局超过 5000 分，下一局口罩购买上限 +1；额度跨局保存，进入下一局时生效
+let maskBank=0,maskActive=0,runBonus=false,settled=false;
+function loadProgress(){try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}}
+function saveProgress(){try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}}
+function maskLimit(){return MAX_MASKS+(state===S.TITLE?maskBank:maskActive);}
+function settleRun(){
+  if(settled)return;
+  settled=true;runBonus=Math.floor(score)>BONUS_SCORE;
+  if(runBonus){maskBank++;saveProgress();}
+}
 const MAX_LIVES=10;
 const keys={left:false,right:false,up:false,down:false};
 let touchTarget=null,touchDown=false;
@@ -560,10 +560,11 @@ function reset(){
       // 停止线在 ix.x-46，斑马线在 ix.x~ix.x+34；骑手排在停止线后方，绝不在斑马线附近
       x:ix.x-52-slot*26-rnd(0,4),y,dir:1,smoking:!!s,
       speed:RIDER_SPEED,fire:s?rnd(1.2,2.0):0,phase:rnd(0,6),
-      waitingFor:ix,assignIX:ix,col:c,green:(k%4===2),trail:rnd(.05,.18),pre:true
+      waitingFor:ix,assignIX:ix,col:c,green:(k%4===2),red:(k%4!==2&&k%3===1),trail:rnd(.05,.18),pre:true
     }));
   });
 }
+loadProgress();
 reset();
 function updateShopUI(){
   const ml=document.getElementById('moneyLabel'),mk=document.getElementById('maskLabel'),gs=document.getElementById('gasLabel');
@@ -571,11 +572,11 @@ function updateShopUI(){
   ml.textContent=money+' G';mk.textContent=masks;gs.textContent=gasMasks?gasMasks+'（剩 '+gasUses+' 次）':'0';
   const canBuy=state===S.TITLE||state===S.PLAY;
   const bm=document.getElementById('buyMaskBtn'),bg=document.getElementById('buyGasBtn');
-  if(bm)bm.disabled=!canBuy||money<MASK_COST||masks>=MAX_MASKS;
+  if(bm)bm.disabled=!canBuy||money<MASK_COST||masks>=maskLimit();
   if(bg)bg.disabled=!canBuy||money<GAS_COST||gasMasks>=MAX_GAS;
 }
 function buyMask(){
-  if((state!==S.TITLE&&state!==S.PLAY)||money<MASK_COST||masks>=MAX_MASKS)return false;
+  if((state!==S.TITLE&&state!==S.PLAY)||money<MASK_COST||masks>=maskLimit())return false;
   money-=MASK_COST;masks++;sfx(520,.1,'triangle',.04);updateShopUI();return true;
 }
 function buyGasMask(){
@@ -676,33 +677,35 @@ function routeFire(e){
   sfx(115,.06,'sawtooth',.014);
 }
 function cyclistFire(c){
-  aimedAt(c.x,c.y,1,.12,rnd(78,96),8,5,null);
+  aimedAt(c.x,c.y,1,.12,rnd(78,96),8,3.6,null);
   if(Math.random()<.3){
     const a=aimAngle(c.x,c.y,60,rnd(-.3,.3)),sp=rnd(52,70);
-    addBullet(c.x,c.y,Math.cos(a)*sp,Math.sin(a)*sp,rnd(14,19),6,2);
+    addBullet(c.x,c.y,Math.cos(a)*sp,Math.sin(a)*sp,rnd(14,19),4,2);
   }
   sfx(160,.05,'square',.012);
 }
 // 抽烟骑手高速经过时身后拖出一串烟雾：不追踪、缓慢扩散，碰到照样中烟扣血
+// 缩短单颗烟的存活时间，避免拖出一长条（骑手速度快，寿命稍长就会横贯半个屏幕）
 function cyclistTrail(c){
   const bx=c.x-c.dir*rnd(12,20),by=c.y+rnd(-4,4);
-  addBullet(bx,by,-c.dir*rnd(3,9),rnd(-7,7),rnd(9,13),rnd(1.8,2.6),rnd(3,4.5),0);
+  addBullet(bx,by,-c.dir*rnd(3,9),rnd(-7,7),rnd(9,13),rnd(1.0,1.5),rnd(3,4.5),0);
 }
 // 等红灯时不开火也不拖尾，只是嘴里的烟缓缓向身后飘散（仍会伤到后方的玩家）
 function cyclistIdleSmoke(c){
   for(let i=0;i<2;i++){
     addBullet(c.x-c.dir*rnd(2,8),c.y+rnd(-9,-3),
-      -c.dir*rnd(10,18),rnd(-6,2),rnd(9,13),rnd(1.8,2.6),rnd(1.5,2.5),0);
+      -c.dir*rnd(10,18),rnd(-6,2),rnd(9,13),rnd(1.0,1.5),rnd(1.5,2.5),0);
   }
 }
 function spawnCyclist(){
   const fromLeft=Math.random()<.5,smoking=Math.random()<.6;
+  const green=Math.random()<.14,red=!green&&Math.random()<.13;
   cyclists.push({
     x:fromLeft?camX-50:camX+W+50,
     y:rnd(250,318),dir:fromLeft?1:-1,smoking,
     speed:RIDER_SPEED,fire:smoking?rnd(.15,.3):0,phase:rnd(0,6),
     col:Math.floor(Math.random()*PASSER_COLORS.length),
-    green:Math.random()<.14,trail:rnd(.05,.18)
+    green,red,trail:rnd(.05,.18)
   });
 }
 // 骑手和玩家看同一盏灯。等灯位置只在斑马线后方的停止线一侧，
@@ -731,7 +734,7 @@ function spawnWaitingAt(ix,k){
   cyclists.push({
     x:camX-70-rnd(0,40),y:pat[0],dir:1,smoking:!!pat[1],
     speed:RIDER_SPEED,fire:pat[1]?rnd(1.2,2.0):0,phase:rnd(0,6),
-    waitingFor:ix,assignIX:ix,col:pat[2],green:(k%4===2),trail:rnd(.05,.18)
+    waitingFor:ix,assignIX:ix,col:pat[2],green:(k%4===2),red:(k%4!==2&&k%3===1),trail:rnd(.05,.18)
   });
 }
 function useFan(){
@@ -750,23 +753,24 @@ function useFan(){
   puff(player.x,player.y,10,'#e6f2f0');sfx(320,.16,'triangle',.055);
   if(n>0)sfx(180,.12,'sine',.03);
 }
-function hit(label){
-  player.lives--;player.inv=4.0;shake=7;
+function hit(label,dmg){
+  const hurt=Math.max(0,dmg||1); // 擦弹只扣 0.5 滴血
+  player.lives=Math.max(0,player.lives-hurt);player.inv=hurt<1?1.0:2.0;shake=hurt<1?3:7;
   bumpFx=0;hurtFx=1.1;hurtLabel=label||'咳咳咳';
-  bullets=bullets.filter(b=>Math.hypot(b.x-player.x,b.y-player.y)>120);
-  puff(player.x,player.y,20,'#e6a89a');sfx(90,.4,'sawtooth',.08);
+  if(hurt>=1)bullets=bullets.filter(b=>Math.hypot(b.x-player.x,b.y-player.y)>120);
+  puff(player.x,player.y,hurt<1?10:20,'#e6a89a');sfx(90,hurt<1?.18:.4,'sawtooth',hurt<1?.04:.08);
   if(player.lives<=0){
-    state=S.OVER;overShake=2.0;shake=2.2;
+    state=S.OVER;overShake=2.0;shake=2.2;settleRun();
     best=Math.max(best,Math.floor(score));sfx(65,.7,'sawtooth',.08);updateShopUI();
   }
 }
 function win(){
-  state=S.WIN;best=Math.max(best,Math.floor(score));updateShopUI();
+  state=S.WIN;settleRun();best=Math.max(best,Math.floor(score));updateShopUI();
   sfx(520,.5,'triangle',.07);setTimeout(()=>sfx(660,.5,'triangle',.06),160);
 }
 // 彩蛋：开局拐进家门，直接放弃步行改网购
 function shopEnd(){
-  state=S.SHOP;best=Math.max(best,Math.floor(score));updateShopUI();
+  state=S.SHOP;settleRun();best=Math.max(best,Math.floor(score));updateShopUI();
   puff(player.x,player.y,14,'#ffd07a');
   sfx(330,.18,'triangle',.05);setTimeout(()=>sfx(660,.35,'sine',.05),180);
 }
@@ -1004,7 +1008,11 @@ function update(dt){
     if(player.inv>0&&dist<62&&dist>.1){
       b.vx+=(b.x-player.x)/dist*150*dt;b.vy+=(b.y-player.y)/dist*150*dt;
     }
-    if(!b.grazed&&dist<hr+15&&dist>player.r+hr){b.grazed=true;graze++;score+=50;if(graze%10===0)sfx(660,.05,'sine',.03);}
+    // 擦弹不再加分，同样造成伤害：半滴血（0.5），并进入较短无敌
+    if(!b.grazed&&dist<hr+15&&dist>player.r+hr){
+      b.grazed=true;graze++;
+      if(player.inv<=0&&!useSmokeProtection())hit('咳',.5);
+    }
     if(player.inv<=0&&dist<hr+player.r){if(!useSmokeProtection())hit();break;}
   }
   for(let i=particles.length-1;i>=0;i--){
@@ -1064,14 +1072,20 @@ function drawPerson(x,y,inv,side,smoking,col,variant){
   ctx.restore();
 }
 function drawCyclist(c){
-  // 外卖骑手：多数黄车黄衣，偶尔穿插绿色（约 1/7）；深蓝裤子，按行进方向镜像
-  const x=c.x-camX,y=c.y+Math.sin(c.phase)*1.5,smk=c.smoking!==false,gr=!!c.green;
+  // 外卖骑手：多数黄车黄衣，穿插少量绿色/红色；深蓝裤子，按行进方向镜像
+  const x=c.x-camX,y=c.y+Math.sin(c.phase)*1.5,smk=c.smoking!==false,gr=!!c.green,rd=!!c.red;
   const P=gr
     ? {hub:'#7fe09a',box:'#2f9b52',boxTop:'#4fd07a',boxHi:'#9df0b5',boxLo:'#27834a',
        body:'#3fbf6a',deck:'#74e096',bodyLo:'#2a9b56',bodyLo2:'#35a85c',
        front:'#4fc97a',frontHi:'#8ce8a6',lamp:'#eaffe8',
        coat:'#3fbf6a',coatHi:'#74e096',coatLo:'#2a9b56',
        helm:'#4fc97a',helmHi:'#8ce8a6',helmLo:'#2a9b56'}
+    : rd
+    ? {hub:'#ff8a7a',box:'#b52b2b',boxTop:'#e04a42',boxHi:'#ff8d82',boxLo:'#992020',
+       body:'#e04a42',deck:'#ff7768',bodyLo:'#b8302c',bodyLo2:'#c93c34',
+       front:'#ef5348',frontHi:'#ff9184',lamp:'#ffead0',
+       coat:'#e04a42',coatHi:'#ff7d70',coatLo:'#b8302c',
+       helm:'#ef5348',helmHi:'#ff9184',helmLo:'#b8302c'}
     : {hub:'#f2bb31',box:'#c77d16',boxTop:'#ffb627',boxHi:'#ffda5c',boxLo:'#d88a18',
        body:'#ffb627',deck:'#ffd23f',bodyLo:'#d98d16',bodyLo2:'#e09b1e',
        front:'#ffc831',frontHi:'#ffda55',lamp:'#fff0a8',
@@ -1223,7 +1237,12 @@ function render(){
   // HUD
   rect(ctx,0,0,W,22,'rgba(12,17,24,.72)');
   txt('生命',6,11,10,'#cbd2d7');
-  for(let i=0;i<MAX_LIVES;i++)blockCircle(ctx,30+i*6.4,11,3.1,i<player.lives?'#e35b4c':'#3c454e');
+  for(let i=0;i<MAX_LIVES;i++){
+    const left=player.lives-i, x=30+i*6.4;
+    if(left>=1)blockCircle(ctx,x,11,3.1,'#e35b4c');
+    else if(left>0){blockCircle(ctx,x,11,3.1,'#5d3b39');blockCircle(ctx,x,11,1.8,'#e35b4c');}
+    else blockCircle(ctx,x,11,3.1,'#3c454e');
+  }
   txt('扇风',96,11,10,'#cbd2d7');
   rect(ctx,120,7,34,8,'#3b444c');
   const ready=player.fanCd<=0;
@@ -1232,8 +1251,8 @@ function render(){
   txt('擦 '+graze,190,11,10,'#cbd2d7');
   txt('分 '+String(Math.floor(score)).padStart(5,'0'),234,11,10,'#e6ebee');
   txt(money+'G',294,11,10,'#ffd76a');
-  txt('口'+masks,330,11,10,'#dff5f2');
-  txt('面'+gasMasks+(gasMasks?'/'+gasUses+'次':''),366,11,10,protect>0?'#8be9ff':'#aeb8be');
+  txt('口'+masks+'/'+(MAX_MASKS+maskActive),328,11,9,'#dff5f2');
+  txt('面'+gasMasks+(gasMasks?'/'+gasUses+'次':''),372,11,9,protect>0?'#8be9ff':'#aeb8be');
   txt(windLabel,W-8,11,10,'#aeb8be','right');
 
   if(blockedBy){
@@ -1248,11 +1267,12 @@ function render(){
 
   if(state===S.TITLE)drawTitle();
   if(state===S.PAUSE)drawOverlay('暂停','按 P 继续');
-  if(state===S.OVER)drawOverlay('被烟呛倒','走到 '+areaName()+' · 距超市 '+Math.max(0,Math.round(MARKET_X-player.x))+'m\n擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 重来');
-  if(state===S.WIN)drawOverlay('到达超市！','用时 '+elapsed.toFixed(1)+' 秒 · 擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 再走一趟');
-  if(state===S.SHOP)drawOverlay('已回家，改网购','走到门口就拐进去了——放弃步行，直接下单。\n用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟');
+  if(state===S.OVER)drawOverlay('被烟呛倒','走到 '+areaName()+' · 距超市 '+Math.max(0,Math.round(MARKET_X-player.x))+'m\n擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 重来'+bonusLine());
+  if(state===S.WIN)drawOverlay('到达超市！','用时 '+elapsed.toFixed(1)+' 秒 · 擦弹 '+graze+' · 分数 '+Math.floor(score)+'\n按 Enter / 点击画面 再走一趟'+bonusLine());
+  if(state===S.SHOP)drawOverlay('已回家，改网购','走到门口就拐进去了——放弃步行，直接下单。\n用时 '+elapsed.toFixed(1)+' 秒 · 按 Enter / 点击画面 再走一趟'+bonusLine());
   ctx.restore();
 }
+function bonusLine(){return runBonus?'\n本局超过 '+BONUS_SCORE+' 分 · 下一局口罩可多买 1 个':'';}
 function drawOverlay(title,sub){
   ctx.fillStyle='rgba(8,12,18,.74)';ctx.fillRect(0,0,W,H);
   txt(title,W/2,H/2-34,28,'#f2f4f4','center');
@@ -1260,6 +1280,22 @@ function drawOverlay(title,sub){
   ctx.fillStyle='#c8d0d5';
   const lines=sub.split('\n');lines.forEach((l,i)=>ctx.fillText(l,W/2,H/2+2+i*20));
   if(best>0)txt('最佳分数 '+best,W/2,H/2+lines.length*20+8,10,'#c4a86a','center');
+}
+// 标题页的装备购买按钮（开始前点击购买）
+function shopButtons(){
+  return [
+    {id:'mask',x:20,y:220,w:212,h:38,top:'口罩 · 4G / 个',
+     sub:'持有 '+masks+'/'+maskLimit()+' · 抵挡 0.5 秒',can:money>=MASK_COST&&masks<maskLimit()},
+    {id:'gas',x:248,y:220,w:212,h:38,top:'防毒面具 · 50G / 个',
+     sub:'持有 '+gasMasks+'/1'+(gasMasks?' · 剩 '+gasUses+' 次':'')+' · 2 秒×5 次',can:money>=GAS_COST&&gasMasks<MAX_GAS}
+  ];
+}
+function drawShopButton(b){
+  rect(ctx,b.x,b.y,b.w,b.h,b.can?'#17453f':'#1b232b');
+  ctx.lineWidth=1;ctx.strokeStyle=b.can?'#5fb6a5':'#3a444c';
+  ctx.strokeRect(Math.round(b.x)+.5,Math.round(b.y)+.5,Math.round(b.w)-1,Math.round(b.h)-1);
+  txt(b.top,b.x+b.w/2,b.y+13,11,b.can?'#e2f7f3':'#87919a','center');
+  txt(b.sub,b.x+b.w/2,b.y+27,10,b.can?'#8fd3c9':'#6f7a83','center');
 }
 function drawTitle(){
   ctx.fillStyle='rgba(8,12,18,.84)';ctx.fillRect(0,0,W,H);
@@ -1270,24 +1306,21 @@ function drawTitle(){
   ctx.fillStyle='#d6dcdf';
   [
     '移动：WASD / 方向键（触屏：按住画面拖动）',
-    '扇风吹开烟雾：空格 / X（半径 46px，CD 1.6 秒） · 暂停 P · 静音 M'
+    '扇风：空格 / X · 暂停 P · 静音 M'
   ].forEach((l,i)=>ctx.fillText(l,W/2,88+i*16));
   txt('—— 规则 ——',W/2,120,11,'#8fd3c9','center');
   [
-    '从左侧的家出发，穿过七个街区走到右侧超市，扣光 10 滴血即失败。',
-    '路中央与上下人行道都有烟民，所有烟雾瞄准玩家，判定比可见边缘外扩一圈。',
-    '红灯停、绿灯行：必须停在停止线后等绿灯；正面遇烟民要上下绕开约 38px。',
-    '撞到抽烟者或抽烟骑手扣 1 滴血；普通人、普通骑手和汽车只挡路不扣血。',
-    '扇风可吹开近身处烟雾；等红灯时烟雾照样追着你打，擦弹得分。'
+    '从左侧的家走到右侧超市即通关；扣光 10 滴血则失败。',
+    '红灯停绿灯行，遇烟民和车辆要绕行；烟雾会一直追着你打。',
+    '扇风可吹开近身烟雾；撞到抽烟者或抽烟骑手会扣血。',
+    '擦到烟也会掉半滴血，等红灯时也别放松。'
   ].forEach((l,i)=>ctx.fillText(l,W/2,136+i*16));
-  txt('—— 装备购买 ——',W/2,222,11,'#8fd3c9','center');
-  [
-    '初始 64G。按 1 买口罩 4G/个（限 5 个），中烟抵挡 0.5 秒。',
-    '按 2 买防毒面具 50G/个（限 1 个），抵挡 2 秒 × 5 次，用完才消失。',
-    '中烟自动消耗装备抵挡；撞击伤害不抵挡。开局前点右侧按钮购买。'
-  ].forEach((l,i)=>ctx.fillText(l,W/2,238+i*16));
-  if(best>0)txt('最佳分数 '+best,W/2,292,10,'#c4a86a','center');
-  if(Math.floor(performance.now()/500)%2===0)txt('—— 点击任意处开始游戏 ——',W/2,312,15,'#ffcf6b','center');
+  txt('—— 出发前补给（点击按钮购买）——',W/2,205,11,'#8fd3c9','center');
+  shopButtons().forEach(drawShopButton);
+  txt('余额 '+money+'G · 按 1 / 2 购买 · 中烟自动消耗，撞击不抵挡',W/2,266,9,'#9fb0b6','center');
+  txt(maskBank?'上局高分奖励：口罩可多买 '+maskBank+' 个（已计入上方上限）':'单局超过 '+BONUS_SCORE+' 分，下一局口罩可多买 1 个',W/2,282,9,maskBank?'#ffcf6b':'#9fb0b6','center');
+  if(best>0)txt('最佳分数 '+best,W/2,298,10,'#c4a86a','center');
+  if(Math.floor(performance.now()/500)%2===0)txt('—— 点击任意处开始游戏 ——',W/2,316,15,'#ffcf6b','center');
 }
 
 let last=performance.now();
@@ -1297,6 +1330,7 @@ requestAnimationFrame(loop);
 function startGame(){
   // 标题页买的装备带进本局；失败/通关/彩蛋后重开才重置余额和装备
   if(state!==S.TITLE)reset();
+  maskActive=maskBank;maskBank=0;saveProgress();runBonus=false;settled=false;
   state=S.PLAY;canvas.focus();sfx(440,.12,'triangle',.05);updateShopUI();
 }
 window.addEventListener('keydown',e=>{
@@ -1324,7 +1358,20 @@ function pointerPos(e){
   const r=canvas.getBoundingClientRect();
   return{x:(e.clientX-r.left)/r.width*W+camX,y:(e.clientY-r.top)/r.height*H};
 }
+function titleShopHit(e){
+  const r=canvas.getBoundingClientRect();
+  const lx=(e.clientX-r.left)/r.width*W,ly=(e.clientY-r.top)/r.height*H;
+  for(const b of shopButtons()){
+    if(lx>=b.x&&lx<=b.x+b.w&&ly>=b.y&&ly<=b.y+b.h){
+      if(b.can){if(b.id==='mask')buyMask();else buyGasMask();}
+      else sfx(120,.08,'square',.02);
+      return true;
+    }
+  }
+  return false;
+}
 canvas.addEventListener('pointerdown',e=>{
+  if(state===S.TITLE){if(titleShopHit(e))return;startGame();return;}
   if(state!==S.PLAY){startGame();return;}
   touchDown=true;touchTarget=pointerPos(e);
   try{canvas.setPointerCapture(e.pointerId);}catch(err){}
@@ -1335,8 +1382,6 @@ canvas.addEventListener('pointercancel',()=>{touchDown=false;touchTarget=null;})
 document.getElementById('fanBtn').addEventListener('pointerdown',e=>{e.preventDefault();useFan();});
 function toggleSound(){muted=!muted;document.getElementById('soundBtn').textContent='声音：'+(muted?'关':'开');}
 document.getElementById('soundBtn').addEventListener('click',toggleSound);
-document.getElementById('buyMaskBtn').addEventListener('click',buyMask);
-document.getElementById('buyGasBtn').addEventListener('click',buyGasMask);
 })();
 </script>
 </body>
