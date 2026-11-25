@@ -61,7 +61,7 @@ const W=480, H=360, WORLD_W=5400, HOME_X=80, MARKET_X=5320;
 const IS_TOUCH=typeof matchMedia==='function'&&matchMedia('(pointer:coarse)').matches;
 const FAN_CD=2.08, FAN_RANGE=46;
 const MASK_COST=4, GAS_COST=50, MAX_MASKS=5, MAX_GAS=1;
-const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1', MONEY_KEY='dssm.lastMoney.v1', HOME_KEY='dssm.homeExit.v1';
+const BONUS_SCORE=5000, BONUS_KEY='dssm.maskBank.v1', MONEY_KEY='dssm.lastMoney.v1', HOME_KEY='dssm.homeExit.v1', GEAR_KEY='dssm.homeGear.v1';
 const MASK_TIME=.5, GAS_TIME=2, GAS_USES=5;
 const MAX_RIDERS=10, SMOKE_MIN_SPEED=22, RIDER_SPEED=224; // 骑手速度为玩家步行(112)的 2 倍
 // 烟雾贴图边长 = 半径 × 3.4；可见半径约为边长的 0.4 倍，命中判定再向外扩一圈
@@ -468,15 +468,18 @@ let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
 // 高分循环：单局超过 5000 分，下一局口罩购买上限 +1；额度跨局保存，进入下一局时生效
 // 余额循环：每局补充 64G 基础资金，并继承上局没花完的余额，保证每局都有钱买装备
 let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=0,homeExit=false;
+let homeGear={masks:0,gasMasks:0,gasUses:0};
 function loadProgress(){
   try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}
   try{const v=parseInt(localStorage.getItem(MONEY_KEY)||'0',10);carryMoney=Number.isFinite(v)&&v>=0?v:0;}catch(err){carryMoney=0;}
   try{homeExit=localStorage.getItem(HOME_KEY)==='1';}catch(err){homeExit=false;}
+  try{const g=JSON.parse(localStorage.getItem(GEAR_KEY)||'null');homeGear=(g&&typeof g==='object')?{masks:Math.max(0,g.masks|0),gasMasks:Math.max(0,g.gasMasks|0),gasUses:Math.max(0,g.gasUses|0)}:{masks:0,gasMasks:0,gasUses:0};}catch(err){homeGear={masks:0,gasMasks:0,gasUses:0};}
 }
 function saveProgress(){
   try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}
   try{localStorage.setItem(MONEY_KEY,String(carryMoney));}catch(err){}
   try{localStorage.setItem(HOME_KEY,homeExit?'1':'0');}catch(err){}
+  try{localStorage.setItem(GEAR_KEY,JSON.stringify(homeGear));}catch(err){}
 }
 function maskLimit(){return MAX_MASKS+(state===S.TITLE?maskBank:maskActive);}
 function settleRun(home){
@@ -487,7 +490,10 @@ function settleRun(home){
   if(!home&&maskActive>0)maskBank=Math.max(0,maskBank-maskActive);
   runBonus=Math.floor(score)>BONUS_SCORE;
   if(runBonus)maskBank++;
-  carryMoney=money;saveProgress();
+  carryMoney=money;
+  // 回家结算保留本局剩余装备供下局继承；死亡/通关仍不带装备
+  homeGear=home?{masks,gasMasks,gasUses}:{masks:0,gasMasks:0,gasUses:0};
+  saveProgress();
 }
 const MAX_LIVES=10;
 const keys={left:false,right:false,up:false,down:false};
@@ -586,7 +592,10 @@ function reset(){
   bullets=[];particles=[];enemies=makeEnemies();passersby=makePassersby();cyclists=[];
   elapsed=0;wind=0;windLabel='微风';camX=0;shake=0;fanFx=0;bumpFx=0;bumpSfx=0;hurtFx=0;hurtLabel='';
   cycleTimer=3.5;blockedBy=null;overShake=0;graze=0;score=0;
-  money=(homeExit?0:64)+carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
+  money=(homeExit?0:64)+carryMoney;
+  // 回家局继承上局剩余口罩/防毒面具；其它结束方式仍清零
+  masks=homeExit?homeGear.masks:0;gasMasks=homeExit?homeGear.gasMasks:0;gasUses=homeExit?homeGear.gasUses:0;
+  protect=0;shieldFx=0;shieldLabel='';updateShopUI();
   INTERSECTIONS.forEach((ix,k)=>{
     ix.waitSpawned=true;ix.wasGreen=lightOf(ix).green;ix.topUpIn=0;
     WAITING_RIDERS[k].slice(0,2).forEach(([y,s,c],slot)=>cyclists.push({
