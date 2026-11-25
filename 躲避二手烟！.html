@@ -466,11 +466,11 @@ let cycleTimer,blockedBy,overShake;
 let graze=0,score=0,best=0;
 let money=64,masks=0,gasMasks=0,gasUses=0,protect=0,shieldFx=0,shieldLabel='';
 // 高分循环：单局超过 5000 分，下一局口罩购买上限 +1；额度跨局保存，进入下一局时生效
-// 余额同样跨局继承：上一局没花完的钱留到下一局继续用
-let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=64;
+// 余额循环：每局补充 64G 基础资金，并继承上局没花完的余额，保证每局都有钱买装备
+let maskBank=0,maskActive=0,runBonus=false,settled=false,carryMoney=0;
 function loadProgress(){
   try{maskBank=Math.max(0,parseInt(localStorage.getItem(BONUS_KEY)||'0',10)||0);}catch(err){maskBank=0;}
-  try{const v=parseInt(localStorage.getItem(MONEY_KEY)||'64',10);carryMoney=Number.isFinite(v)&&v>=0?v:64;}catch(err){carryMoney=64;}
+  try{const v=parseInt(localStorage.getItem(MONEY_KEY)||'0',10);carryMoney=Number.isFinite(v)&&v>=0?v:0;}catch(err){carryMoney=0;}
 }
 function saveProgress(){
   try{localStorage.setItem(BONUS_KEY,String(maskBank));}catch(err){}
@@ -581,7 +581,7 @@ function reset(){
   bullets=[];particles=[];enemies=makeEnemies();passersby=makePassersby();cyclists=[];
   elapsed=0;wind=0;windLabel='微风';camX=0;shake=0;fanFx=0;bumpFx=0;bumpSfx=0;hurtFx=0;hurtLabel='';
   cycleTimer=3.5;blockedBy=null;overShake=0;graze=0;score=0;
-  money=carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
+  money=64+carryMoney;masks=0;gasMasks=0;gasUses=0;protect=0;shieldFx=0;shieldLabel='';updateShopUI();
   INTERSECTIONS.forEach((ix,k)=>{
     ix.waitSpawned=true;ix.wasGreen=lightOf(ix).green;ix.topUpIn=0;
     WAITING_RIDERS[k].slice(0,2).forEach(([y,s,c],slot)=>cyclists.push({
