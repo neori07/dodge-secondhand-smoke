@@ -39,6 +39,8 @@ global.document = {
 global.addEventListener = (ev, fn) => { (winHandlers[ev] = winHandlers[ev] || []).push(fn); };
 global.requestAnimationFrame = cb => { rafCb = cb; };
 global.performance = { now: () => now };
+global.setInterval = () => 0;                 // BGM scheduler is exercised separately
+global.clearInterval = () => {};
 
 // probe: expose internal state without touching the shipped file
 let js2 = js.replace(/(\}\)\(\);)\s*$/, (_, tail) =>
@@ -85,6 +87,9 @@ key('keydown', ' '); key('keyup', ' ');       // fan
 frames(60);
 key('keydown', '1'); key('keyup', '1');       // buy mask
 frames(30);
+if (d().state === d().S.OVER) {              // scripted run can die before the pause check
+  key('keydown', 'Enter'); key('keyup', 'Enter'); frames(30);
+}
 key('keydown', 'p'); key('keyup', 'p'); frames(10);
 assert(d().state === d().S.PAUSE, 'pause works');
 key('keydown', 'p'); key('keyup', 'p'); frames(300);
