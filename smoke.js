@@ -92,6 +92,11 @@ if (d().state === d().S.OVER) {              // scripted run can die before the 
 }
 key('keydown', 'p'); key('keyup', 'p'); frames(10);
 assert(d().state === d().S.PAUSE, 'pause works');
+const pausedMask = Number(els['maskLabel'].textContent || 0);
+key('keydown', '1'); key('keyup', '1');
+assert(Number(els['maskLabel'].textContent || 0) === pausedMask + 1, 'can buy mask while paused');
+key('keydown', '2'); key('keyup', '2');
+assert((els['gasLabel'].textContent || '').startsWith('1'), 'can buy gas mask while paused');
 key('keydown', 'p'); key('keyup', 'p'); frames(300);
 key('keydown', 'ArrowLeft');
 const x1 = d().player.x;
