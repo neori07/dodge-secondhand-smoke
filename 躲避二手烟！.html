@@ -1254,6 +1254,25 @@ function drawPerson(x,y,inv,side,smoking,col,variant){
   }
   ctx.restore();
 }
+// 防护生效时的面部装备差异：口罩只遮口鼻，防毒面具覆盖整张脸并带护目镜与滤罐
+function drawPlayerGear(px,py,face){
+  const blink=player.inv>0&&Math.floor(player.inv*12)%2===0;
+  ctx.save();
+  ctx.globalAlpha=blink?.45:1;
+  ctx.translate(px,py+11);ctx.scale(PERSON_SCALE,PERSON_SCALE);ctx.translate(-px,-(py+11));
+  if(face<0){ctx.translate(px*2,0);ctx.scale(-1,1);}
+  if(shieldLabel==='防毒面具'){
+    rect(ctx,px-1,py-20,8,7,'#174a5a');
+    rect(ctx,px+1,py-19,4,3,'#8be9ff');rect(ctx,px+5,py-18,2,2,'#bdf4ff');
+    rect(ctx,px+1,py-16,7,3,'#2f6b78');blockCircle(ctx,px+6,py-15,2,'#8be9ff');
+    rect(ctx,px-2,py-19,2,1,'#8be9ff');
+  }else{
+    rect(ctx,px+1,py-17,7,3,'#e2f7f3');rect(ctx,px+1,py-17,7,1,'#8fd3c9');
+    rect(ctx,px+4,py-16,3,1,'#b9e8e2');rect(ctx,px+7,py-17,1,2,'#8fd3c9');
+    rect(ctx,px-1,py-16,2,1,'#e2f7f3');
+  }
+  ctx.restore();
+}
 function drawCyclist(c){
   // 外卖骑手：多数黄车黄衣，穿插少量绿色/红色；深蓝裤子，按行进方向镜像
   const x=c.x-camX,y=c.y+Math.sin(c.phase)*1.5,smk=c.smoking!==false,gr=!!c.green,rd=!!c.red;
@@ -1401,7 +1420,9 @@ function render(){
     ctx.beginPath();ctx.arc(px,player.y,17,0,7);ctx.stroke();
     txt(protect.toFixed(1)+'s',px,player.y-46,9,col,'center');ctx.globalAlpha=1;
   }
-  drawPerson(px,player.y,player.inv,'player',false,0,player.vx<-1?-1:1);
+  const face=player.vx<-1?-1:1;
+  drawPerson(px,player.y,player.inv,'player',false,0,face);
+  if(protect>0&&shieldLabel)drawPlayerGear(px,player.y,face);
   if(shieldFx>0){
     ctx.globalAlpha=clamp(shieldFx/.9,0,1);
     txt(shieldLabel+'挡住了',px,player.y-34,10,'#9fe3db','center');ctx.globalAlpha=1;
